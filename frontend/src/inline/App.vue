@@ -2,7 +2,7 @@
   <div class="root">
     {{post.title}}
     {{post.summary}}
-    <button @click="handleOpenInX">goToX</button>
+    <button @click="handleOpenInX">مشاهده ادامه</button>
   </div>
 </template>
 
@@ -11,38 +11,38 @@
 // components
 
 // helper
-import webliteHandler from "./helper/function/weblite.api";
-import requests from "./helper/function/handleRequests";
-import bus from "./helper/function/bus";
+import webliteHandler from './helper/function/weblite.api'
+import requests from './helper/function/handleRequests'
+import bus from './helper/function/bus'
 // R && W
-const { R, W } = window;
+const { R, W } = window
 
 export default {
-  name: "App",
+  name: 'App',
 
   components: {},
 
   data() {
     return {
-      post: {}
-    };
+      post: {},
+    }
   },
   watch: {
     post() {
-      console.log("post in watch ", this.post);
-    }
+      console.log('post in watch ', this.post)
+    },
   },
 
   created() {
-    W && webliteHandler(this);
+    W && webliteHandler(this)
   },
 
   methods: {
     handleOpenInX() {
-      W.changeModeTo("main", this.post);
-    }
-  }
-};
+      W.changeModeTo('main', this.post)
+    },
+  },
+}
 </script>
 
 

@@ -1,11 +1,17 @@
 <template>
-  <div :class="$style.root">customize</div>
+  <div :class="$style.root">
+    <uploadImage :setImage="setImage" />
+    <post :setPost="setPost" />
+    <uploadFile :setFile="setFile" />
+  </div>
 </template>
 
 
 <script>
 // components
-
+import uploadImage from "./components/uploadImage";
+import post from "./components/post";
+import uploadFile from "./components/uplaodFile";
 // helper
 import webliteHandler from "./helper/function/weblite.api";
 
@@ -15,11 +21,33 @@ const { W, R } = window;
 export default {
   name: "App",
 
-  components: {},
+  components: {
+    uploadImage,
+    post,
+    uploadFile
+  },
 
-  data: () => ({}),
+  data: () => ({
+    image: null,
+    post: {
+      title: "",
+      summary: "",
+      text: ""
+    },
+    file: null
+  }),
 
-  methods: {},
+  methods: {
+    setImage({ target: { files } }) {
+      this.image = files[0];
+    },
+    setFile({ target: { files } }) {
+      this.file = files[0];
+    },
+    setPost(postData) {
+      this.post = postData;
+    }
+  },
 
   created() {
     W && webliteHandler(this);
@@ -30,14 +58,5 @@ export default {
 
 <style module>
 .root {
-  position: relative;
-  width: 350px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 1px #e0e0e0 solid;
-  border-radius: 5px;
-  overflow: hidden;
-  background: #f0f0f098;
 }
 </style>

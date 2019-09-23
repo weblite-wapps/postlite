@@ -1,5 +1,8 @@
 <template>
-  <div class="root"></div>
+  <div class="root">
+    {{post.title}}
+    {{post.text}}
+  </div>
 </template>
 
 
@@ -19,7 +22,7 @@ export default {
   components: {},
 
   data() {
-    return {};
+    return { post: {} };
   },
 
   created() {

@@ -1,5 +1,9 @@
 <template>
-  <div class="root"></div>
+  <div class="root">
+    {{post.title}}
+    {{post.summary}}
+    <button @click="handleOpenInX">goToX</button>
+  </div>
 </template>
 
 
@@ -19,14 +23,25 @@ export default {
   components: {},
 
   data() {
-    return {};
+    return {
+      post: {}
+    };
+  },
+  watch: {
+    post() {
+      console.log("post in watch ", this.post);
+    }
   },
 
   created() {
     W && webliteHandler(this);
   },
 
-  methods: {}
+  methods: {
+    handleOpenInX() {
+      W.changeModeTo("main", this.post);
+    }
+  }
 };
 </script>
 
@@ -42,6 +57,5 @@ export default {
   border: 1px #e0e0e0 solid;
   border-radius: 5px;
   overflow: hidden;
-  background: #f0f0f098;
 }
 </style>

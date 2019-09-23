@@ -39,13 +39,15 @@ export default {
 
   methods: {
     setImage({ target: { files } }) {
-      this.image = files[0]
+      // api.getUrl(files[0]).then(url => this.image = url)
+      this.post.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg"
     },
     setFile({ target: { files } }) {
-      this.file = files[0]
+      // api.getUrl(files[0]).then(url => this.image = url)
+      this.post.fileUrl = "https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg"
     },
     setPost(postData) {
-      this.post = postData
+      this.post = {...this.post, postData}
     },
   },
 

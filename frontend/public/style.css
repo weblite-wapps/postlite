@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    height: 100%;
+}
+*:focus {
+    outline: none;
+    border: dotted 1px gray !important; 
+}
+@font-face {
+   font-family: IranYekan;
+   src: url(BYekan+.ttf);
+}

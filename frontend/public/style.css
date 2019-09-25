@@ -1,15 +1,32 @@
-html{
-    height: 100vh;
+html {
+  height: 100vh;
 }
-body{
-    margin: 0;
-    height: 100%;
+body {
+  margin: 0;
+  height: 100%;
 }
 *:focus {
-    outline: none;
-    border: dotted 1px gray !important; 
+  outline: none;
+  border: dotted 1px gray !important;
 }
+
 @font-face {
-   font-family: IranYekan;
-   src: url(BYekan+.ttf);
+  font-family: iranyekan;
+  font-style: normal;
+  font-weight: bold;
+  src: url('woff/iranyekanwebbold.woff') format('woff');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-style: normal;
+  font-weight: normal;
+  src: url('woff/iranyekanwebregular.woff') format('woff');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-style: normal;
+  font-weight: 500;
+  src: url('woff/iranyekanwebmedium.woff') format('woff');
 }

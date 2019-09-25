@@ -1,5 +1,6 @@
 <template>
   <div class="root">
+    <AppBar />
     {{post.title}}
     {{post.text}}
   </div>
@@ -8,7 +9,7 @@
 
 <script>
 // components
-
+import AppBar from '../components/TheAppBar'
 // helper
 import webliteHandler from "./helper/function/weblite.api";
 import requests from "./helper/function/handleRequests";
@@ -19,7 +20,7 @@ const { R, W } = window;
 export default {
   name: "App",
 
-  components: {},
+  components: {AppBar},
 
   data() {
     return { post: {} };
@@ -36,15 +37,9 @@ export default {
 
 <style scoped>
 .root {
-  position: relative;
-  width: 350px;
-  min-height: 450px;
-  max-height: 450px;
-  display: flex;
-  flex-direction: column;
-  border: 1px #e0e0e0 solid;
-  border-radius: 5px;
-  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
   background: #f0f0f098;
 }
 </style>

@@ -33,21 +33,25 @@ export default {
       title: '',
       summary: '',
       text: '',
+      imageUrl: '',
+      fileUrl: ''
     },
     file: null,
   }),
 
   methods: {
     setImage({ target: { files } }) {
-      // api.getUrl(files[0]).then(url => this.image = url)
-      this.post.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg"
+      // api.getUrl(files[0]).then(url => this.post.imageUrl = url)
     },
     setFile({ target: { files } }) {
-      // api.getUrl(files[0]).then(url => this.image = url)
-      this.post.fileUrl = "https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg"
+      // api.getUrl(files[0]).then(url => this.post.fileUrl = url)
     },
     setPost(postData) {
-      this.post = {...this.post, postData}
+      this.post = {...post, ...postData}
+
+      //should delete: test
+      this.post.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg"
+      this.post.fileUrl = "https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg"
     },
   },
 

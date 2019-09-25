@@ -47,7 +47,6 @@ export default {
   display: block;
   text-align: center;
   background-color: #c9e8ff;
-  height: 50px;
   width: 100%;
   cursor: pointer;
 }

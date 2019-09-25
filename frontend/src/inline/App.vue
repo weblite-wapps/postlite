@@ -2,6 +2,8 @@
   <div class="root">
     {{post.title}}
     {{post.summary}}
+    {{post.imageUrl}}
+    {{post.fileUrl}}
     <button @click="handleOpenInX">مشاهده ادامه</button>
   </div>
 </template>

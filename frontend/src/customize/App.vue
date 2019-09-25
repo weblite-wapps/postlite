@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.root">
-    <uploadImage :setImage="setImage" />
-    <post :setPost="setPost" />
-    <uploadFile :setFile="setFile" />
+    <uploadImage :class="$style.image_field" :setImage="setImage" />
+    <post :class="$style.post_field" :setPost="setPost" />
+    <uploadFile :class="$style.file_field" :setFile="setFile" />
   </div>
 </template>
 
@@ -66,5 +66,14 @@ export default {
   height: 100%;
   border: solid #f0f0f0 1px;
   padding: 20px 15px;
+}
+.image_field{
+  height: 50px;
+}
+.file_field{
+  height: 50px;
+}
+.post_field{
+  height: calc(100% - 100px);
 }
 </style>

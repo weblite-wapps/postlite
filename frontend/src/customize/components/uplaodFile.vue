@@ -42,7 +42,6 @@ export default {
   display: block;
   text-align: center;
   background-color: #F7DF5C;
-  height: 50px;
   width: 100%;
   cursor: pointer;
 }

@@ -1,8 +1,14 @@
 <template>
-  <div class="root">
+  <div :class="$style.root">
     <AppBar />
-    {{post.title}}
-    {{post.text}}
+    <div :class="$style.app_content">
+      <ImageField :class="$style.image_field" :image-url="post.imageUrl" />
+      <PostField :post-text="post.text" :post-title="post.title" />
+      <hr />
+      <DownloadField :file-obj="post.fileObj" />
+      <hr />
+      <CommentsField />
+    </div>
   </div>
 </template>
 
@@ -10,36 +16,51 @@
 <script>
 // components
 import AppBar from '../components/TheAppBar'
+import ImageField from './components/TheImageField'
+import PostField from './components/ThePostField'
+import DownloadField from './components/TheDownloadField'
+import CommentsField from './components/TheCommentsField'
 // helper
-import webliteHandler from "./helper/function/weblite.api";
-import requests from "./helper/function/handleRequests";
-import bus from "./helper/function/bus";
+import webliteHandler from './helper/function/weblite.api'
+import requests from './helper/function/handleRequests'
+import bus from './helper/function/bus'
 // R && W
-const { R, W } = window;
+const { R, W } = window
 
 export default {
-  name: "App",
+  name: 'App',
 
-  components: {AppBar},
+  components: { AppBar, ImageField, PostField, DownloadField },
 
   data() {
-    return { post: {} };
+    return { post: {} }
   },
 
   created() {
-    W && webliteHandler(this);
+    W && webliteHandler(this)
   },
 
-  methods: {}
-};
+  methods: {},
+}
 </script>
 
 
-<style scoped>
+<style module>
 .root {
   width: 100vw;
   height: 100vh;
+  background: white;
+  font-family: IranYekan;
+}
+.app_content {
+  height: calc(100% - 50px);
   overflow: scroll;
-  background: #f0f0f098;
+}
+.image_field {
+  width: 100%;
+}
+hr {
+  border-top: 1px solid #CCCCCC;
+  margin: 5px 20px;
 }
 </style>

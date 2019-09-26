@@ -66,39 +66,21 @@ export default {
         ...this.usersInfo[writerId],
         date,
         body,
-        fromMe: writerId === userId,
+        fromMe: writerId === this.userId,
         _id,
       }))
 
-      return [
-        {
-          body:
-            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-          fromMe: false,
-          firstname: 'جواد',
-          lastname: 'واحدی',
-          profileImage: '',
-        },
-        {
-          body:
-            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-          fromMe: true,
-          firstname: 'جواد',
-          lastname: 'واحدی',
-          profileImage: '',
-        },
-        {
-          body:
-            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-          fromMe: false,
-          firstname: 'جواد',
-          lastname: 'واحدی',
-          profileImage: '',
-        },
-      ]
+      // return [
+      //   {
+      //     body:
+      //       'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
+      //     date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
+      //     fromMe: false,
+      //     firstname: 'جواد',
+      //     lastname: 'واحدی',
+      //     profileImage: '',
+      //   },
+      // ]
     },
   },
   methods: {

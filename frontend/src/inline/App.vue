@@ -15,9 +15,8 @@ import ButtomBar from './components/TheButtomBar'
 // helper
 import webliteHandler from './helper/function/weblite.api'
 import requests from './helper/function/handleRequests'
-import bus from './helper/function/bus'
-// R && W
-const { R, W } = window
+//  W
+const { W } = window
 
 export default {
   name: 'App',

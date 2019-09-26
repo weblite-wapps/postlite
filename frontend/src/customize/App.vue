@@ -16,7 +16,7 @@ import uploadFile from './components/uplaodFile'
 import webliteHandler from './helper/function/weblite.api'
 
 // W
-const { W, R } = window
+const { W } = window
 
 export default {
   name: 'App',
@@ -34,7 +34,7 @@ export default {
       summary: '',
       text: '',
       imageUrl: '',
-      fileUrl: ''
+      fileUrl: '',
     },
     file: null,
   }),
@@ -47,11 +47,13 @@ export default {
       // api.getUrl(files[0]).then(url => this.post.fileUrl = url)
     },
     setPost(postData) {
-      this.post = {...post, ...postData}
+      this.post = { ...post, ...postData }
 
       //should delete: test
-      this.post.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg"
-      this.post.fileUrl = "https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg"
+      this.post.imageUrl =
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg'
+      this.post.fileUrl =
+        'https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg'
     },
   },
 
@@ -65,22 +67,23 @@ export default {
 <style module>
 .root {
   box-sizing: border-box;
-  background-color:white;
+  background-color: white;
   width: 100%;
   height: 100%;
   border: solid #f0f0f0 1px;
   padding: 20px 15px;
 }
-.image_field{
+.image_field {
   height: 50px;
 }
-.file_field{
+.file_field {
   height: 50px;
 }
-.post_field{
+.post_field {
   height: calc(100% - 100px);
 }
-input, textarea:focus{
+input,
+textarea:focus {
   border: dotted 1px gray;
 }
 </style>

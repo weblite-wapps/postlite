@@ -7,7 +7,7 @@
       <hr />
       <DownloadField :file-obj="post.fileObj" />
       <hr />
-      <CommentsField :wis-id="wisId" user-id="userId"/>
+      <CommentsField :wis-id="wisId" user-id="userId" />
     </div>
   </div>
 </template>
@@ -22,10 +22,8 @@ import DownloadField from './components/TheDownloadField'
 import CommentsField from './components/TheCommentsField'
 // helper
 import webliteHandler from './helper/function/weblite.api'
-import requests from './helper/function/handleRequests'
-import bus from './helper/function/bus'
-// R && W
-const { R, W } = window
+// W
+const { W } = window
 
 export default {
   name: 'App',
@@ -33,7 +31,11 @@ export default {
   components: { AppBar, ImageField, PostField, DownloadField, CommentsField },
 
   data() {
-    return { post: {}, wisId: '5cd6de160583944a3a01c9de', userId: '5c30dc0cdf7c064bfdf85f7d' }
+    return {
+      post: {},
+      wisId: '5cd6de160583944a3a01c9de',
+      userId: '5c30dc0cdf7c064bfdf85f7d',
+    }
   },
 
   created() {

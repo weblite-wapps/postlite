@@ -7,7 +7,7 @@
       <hr />
       <DownloadField :file-obj="post.fileObj" />
       <hr />
-      <CommentsField />
+      <CommentsField :wis-id="wisId" user-id="userId"/>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   components: { AppBar, ImageField, PostField, DownloadField, CommentsField },
 
   data() {
-    return { post: {} }
+    return { post: {}, wisId: '5cd6de160583944a3a01c9de', userId: '5c30dc0cdf7c064bfdf85f7d' }
   },
 
   created() {
@@ -60,7 +60,7 @@ export default {
   width: 100%;
 }
 hr {
-  border-top: 1px solid #CCCCCC;
+  border-top: 1px solid #cccccc;
   margin: 5px 20px;
 }
 </style>

@@ -1,7 +1,6 @@
-export default process.env.NODE_ENV === "development"
-  ? {
-      server: "https://localhost:4220"
-    }
-  : {
-      server: "https://wapp.weblite.me/postlite"
-    };
+export default {
+  comments: {
+    server: (process.env.NODE_ENV !== "development") ? "https://wapp.weblite.me/srv-comment"
+      : "http://localhost:5110"
+  }
+}

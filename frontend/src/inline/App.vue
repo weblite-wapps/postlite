@@ -45,7 +45,7 @@ export default {
 
   methods: {
     handleOpenInX() {
-      W.changeModeTo('main', this.post)
+      W.changeModeTo('main')
     },
   },
 }

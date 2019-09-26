@@ -3,12 +3,12 @@
     <div :class="$style.comments">
       <Comment
         v-for="comment in comments"
-        :key="comment.date"
+        :key="comment._id"
         :body="comment.body"
         :firstname="comment.firstname"
         :lastname="comment.lastname"
         :profile-image="comment.profileImage"
-        :from-admin="comment.fromAdmin"
+        :from-me="comment.fromMe"
       />
     </div>
     <div :class="$style.send_box">
@@ -18,7 +18,7 @@
         v-model="currentComment"
         placeholder="متن پاسخ خود را وارد کنید"
       />
-      <button :class="$style.send_btn">
+      <button :class="$style.send_btn" @click="sendComment">
         <img src="send.svg" />
       </button>
     </div>
@@ -28,43 +28,83 @@
 <script>
 //components
 import Comment from './CommentItem'
+//utils
+import {
+  getAllComments,
+  postComment,
+} from '../helper/function/handleRequests.js'
+// W
+const { W } = window
+
 export default {
   components: { Comment },
+  props: {
+    userId: {
+      type: String,
+    },
+    wisId: {
+      type: String,
+    },
+  },
   data: () => ({
-    // comments: [],
-    comments: [
-      {
-        body:
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-        date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-        fromAdmin: false,
-        firstname: 'جواد',
-        lastname: 'واحدی',
-        profileImage: '',
-      },
-      {
-        body:
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-        date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-        fromAdmin: true,
-        firstname: 'جواد',
-        lastname: 'واحدی',
-        profileImage: '',
-      },
-      {
-        body:
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-        date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-        fromAdmin: false,
-        firstname: 'جواد',
-        lastname: 'واحدی',
-        profileImage: '',
-      },
-    ],
+    rawComments: [],
+    usersInfo: {},
     currentComment: '',
   }),
   mounted() {
-    //request handler fill comments
+    getAllComments(this.wisId).then(rawComments => {
+      const userIds = rawComments.map(({ writerId }) => writerId)
+      W.getUsersInfoById(userIds).then(usersInfo => {
+        this.rawComments = rawComments
+        this.usersInfo = usersInfo
+      })
+    })
+  },
+  computed: {
+    comments() {
+      return this.rawComments.map(({ writerId, body, date, _id }) => ({
+        ...this.usersInfo[writerId],
+        date,
+        body,
+        fromMe: writerId === userId,
+        _id,
+      }))
+
+      return [
+        {
+          body:
+            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
+          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
+          fromMe: false,
+          firstname: 'جواد',
+          lastname: 'واحدی',
+          profileImage: '',
+        },
+        {
+          body:
+            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
+          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
+          fromMe: true,
+          firstname: 'جواد',
+          lastname: 'واحدی',
+          profileImage: '',
+        },
+        {
+          body:
+            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
+          date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
+          fromMe: false,
+          firstname: 'جواد',
+          lastname: 'واحدی',
+          profileImage: '',
+        },
+      ]
+    },
+  },
+  methods: {
+    sendComment() {
+      postComment(this.wisId, this.userId, this.currentComment)
+    },
   },
 }
 </script>

@@ -11,7 +11,17 @@
         :from-admin="comment.fromAdmin"
       />
     </div>
-    <div :class="$style.send_box"></div>
+    <div :class="$style.send_box">
+      <textarea
+        :class="$style.comment_input"
+        type="text"
+        v-model="currentComment"
+        placeholder="متن پاسخ خود را وارد کنید"
+      />
+      <button :class="$style.send_btn">
+        <img src="send.svg" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -51,6 +61,7 @@ export default {
         profileImage: '',
       },
     ],
+    currentComment: '',
   }),
   mounted() {
     //request handler fill comments
@@ -70,8 +81,42 @@ export default {
   padding: 0 20px;
 }
 .send_box {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: center;
+  align-items: center;
   height: 55px;
   box-sizing: border-box;
-  background: lightgrey;
+  background: #cccccc;
+}
+.comment_input {
+  direction: rtl;
+  box-sizing: border-box;
+  margin-right: 10px;
+  width: 100%;
+  height: 35px;
+  max-height: 75px;
+  min-height: 3۵px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 11px;
+  padding: 10px 15px;
+  font: 12px IranYekan;
+  border: none;
+  resize: none;
+}
+.send_btn {
+  border: none;
+  margin-left: 3px;
+  height: 40px;
+  width: 40px;
+  background: inherit;
+  cursor: pointer;
+}
+.send_box img {
+  width: 28px;
+  margin-bottom: 5px;
+  transform: rotate(-50deg);
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(229deg)
+    brightness(103%) contrast(103%);
 }
 </style>

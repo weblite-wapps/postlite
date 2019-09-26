@@ -80,4 +80,7 @@ export default {
 .post_field{
   height: calc(100% - 100px);
 }
+input, textarea:focus{
+  border: dotted 1px gray;
+}
 </style>

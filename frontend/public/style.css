@@ -7,7 +7,6 @@ body {
 }
 *:focus {
   outline: none;
-  border: dotted 1px gray !important;
 }
 
 @font-face {

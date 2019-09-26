@@ -18,9 +18,25 @@
         v-model="currentComment"
         placeholder="متن پاسخ خود را وارد کنید"
       />
-      <button :class="$style.send_btn" @click="sendComment">
-        <img src="send.svg" />
-      </button>
+      <div :class="$style.send_indicator">
+        <Loading
+          v-if="isLoading"
+          :width="34"
+          :height="34"
+          :class="$style.loading"
+          color="#FFFFFF"
+          :active.sync="isLoading"
+          :is-full-page="false"
+        />
+        <button
+          v-else
+          :class="$style.send_btn"
+          @click="sendComment"
+          @keyup.enter.exact="sendComment"
+        >
+          <img src="send.svg" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +44,7 @@
 <script>
 //components
 import Comment from './CommentItem'
+import Loading from 'vue-loading-overlay'
 //utils
 import {
   getAllComments,
@@ -37,7 +54,7 @@ import {
 const { W } = window
 
 export default {
-  components: { Comment },
+  components: { Comment, Loading },
   props: {
     userId: {
       type: String,
@@ -50,25 +67,27 @@ export default {
     rawComments: [],
     usersInfo: {},
     currentComment: '',
+    isLoading: false,
   }),
   mounted() {
-    getAllComments(this.wisId).then(rawComments => {
-      const userIds = rawComments.map(({ writerId }) => writerId)
-      W.getUsersInfoById(userIds).then(usersInfo => {
-        this.rawComments = rawComments
-        this.usersInfo = usersInfo
+    this.updateComments()
+      .then(() => {
+        this.isLoading = false
       })
-    })
+      .catch(console.log)
   },
   computed: {
     comments() {
-      return this.rawComments.map(({ writerId, body, date, _id }) => ({
+      const res = this.rawComments.map(({ writerId, body, date, _id }) => ({
         ...this.usersInfo[writerId],
         date,
         body,
         fromMe: writerId === this.userId,
         _id,
       }))
+
+      console.log('comments:', res)
+      return res
 
       // return [
       //   {
@@ -85,7 +104,34 @@ export default {
   },
   methods: {
     sendComment() {
-      postComment(this.wisId, this.userId, this.currentComment)
+      const commentToSubmit = this.currentComment
+
+      this.isLoading = true
+      this.currentComment = ''
+
+      postComment(this.wisId, this.userId, commentToSubmit)
+        .then(this.updateComments)
+        .then(() => {
+          this.isLoading = false
+        })
+        .catch(console.log)
+    },
+    updateComments() {
+      return new Promise(resolve =>
+        getAllComments(this.wisId).then(rawComments => {
+          console.log('comments has been fetched:', rawComments)
+          const userIds = rawComments.map(({ writerId }) => writerId)
+          console.log('userIds:', userIds)
+          W.getUsersInfoById(userIds).then(usersInfo => {
+            console.log('usersInfo:', usersInfo)
+            this.rawComments = rawComments
+            this.usersInfo = usersInfo
+
+            console.log('data:', this.rawComments, this.usersInfo)
+            resolve()
+          })
+        }),
+      )
     },
   },
 }
@@ -109,7 +155,7 @@ export default {
   align-items: center;
   height: 55px;
   box-sizing: border-box;
-  background: #cccccc;
+  background: #777777;
 }
 .comment_input {
   direction: rtl;
@@ -126,11 +172,17 @@ export default {
   border: none;
   resize: none;
 }
+.send_indicator {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  max-width: 70px;
+  box-sizing: border-box;
+}
 .send_btn {
   border: none;
-  margin-left: 3px;
-  height: 40px;
-  width: 40px;
   background: inherit;
   cursor: pointer;
 }
@@ -140,5 +192,8 @@ export default {
   transform: rotate(-50deg);
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(229deg)
     brightness(103%) contrast(103%);
+}
+.loading {
+  margin: 4px 0 0 0;
 }
 </style>

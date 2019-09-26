@@ -3,7 +3,11 @@
     <div :class="fromMe? 'info_container_admin' : 'info_container'">
       <div class="avatar_container" :style="{'flex-direction' : fromMe? 'row':'row-reverse'}">
         <div class="avatar" :style="fromMe? {'background' : '#7DDE88'} : {}">
-          <img v-if="profileImage" class="avatar_img" :src="profileImage" />
+          <img
+            v-if="profileImage"
+            class="avatar_img"
+            :src="`https://www.weblite.me:3000/image/${profileImage}`"
+          />
           <img v-else src="user.svg" class="avatar_img" alt="user" />
         </div>
         <span class="writer" :style="{ 'text-align': fromMe ? 'left' : 'right'}">

@@ -7,7 +7,7 @@
       <hr />
       <DownloadField :file-obj="post.fileObj" />
       <hr />
-      <CommentsField :wis-id="wisId" user-id="userId" />
+      <CommentsField :wis-id="wisId" :user-id="userId" />
     </div>
   </div>
 </template>

@@ -1,0 +1,12 @@
+{
+  "name": "customize-post",
+  "id": "5d8cf15c01dbd77775ee5022",
+  "searchable": true,
+  "instantiable": false,
+  "userInfo": true,
+  "runFromWappsPanel": true,
+  "servIndexes": {
+    "main": "index"
+  },
+  "version": "0.1.1"
+}

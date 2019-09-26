@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.root">
-    <ImageField :class="$style.image_field" :image-url="post.imageUrl" />
+    <ImageField :class="$style.image_field" :image-url="post.image.url" />
     <PostField :class="$style.post_field" :title="post.title" :summary="post.summary" />
-    <ButtomBar :class="$style.buttom_bar" :see-more="handleOpenInX" />
+    <BottomBar :class="$style.buttom_bar" :see-more="handleOpenInX" :attach="!!post.file" />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 // components
 import ImageField from './components/TheImageField'
 import PostField from './components/ThePostField'
-import ButtomBar from './components/TheButtomBar'
+import BottomBar from './components/TheBottomBar'
 // helper
 import webliteHandler from './helper/function/weblite.api'
 import requests from './helper/function/handleRequests'
@@ -24,12 +24,12 @@ export default {
   components: {
     ImageField,
     PostField,
-    ButtomBar,
+    BottomBar,
   },
 
   data() {
     return {
-      post: {},
+      post: { image: { url: '' } },
     }
   },
   watch: {

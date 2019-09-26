@@ -10,6 +10,7 @@ export default vueRoot =>
           vueRoot.creator = creator;
           vueRoot.wisId = W.wisId;
           vueRoot.post = post;
+
           start();
         }
       );

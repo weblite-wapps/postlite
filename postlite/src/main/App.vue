@@ -2,10 +2,10 @@
   <div :class="$style.root">
     <AppBar />
     <div :class="$style.app_content">
-      <ImageField :class="$style.image_field" :image-url="post.imageUrl" />
+      <ImageField :class="$style.image_field" :image-url="post.image.url" />
       <PostField :post-text="post.text" :post-title="post.title" />
       <hr />
-      <DownloadField :file-obj="post.fileObj" />
+      <DownloadField :file-obj="post.file" />
       <hr />
       <CommentsField :wis-id="wisId" :user-id="userId" />
     </div>
@@ -32,7 +32,7 @@ export default {
 
   data() {
     return {
-      post: {},
+      post: { image: { url: '' } },
       wisId: '5cd6de160583944a3a01c9de',
       userId: '5c30dc0cdf7c064bfdf85f7d',
     }

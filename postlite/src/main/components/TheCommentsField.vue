@@ -86,7 +86,6 @@ export default {
         _id,
       }))
 
-      console.log('comments:', res)
       return res
 
       // return [
@@ -119,15 +118,11 @@ export default {
     updateComments() {
       return new Promise(resolve =>
         getAllComments(this.wisId).then(rawComments => {
-          console.log('comments has been fetched:', rawComments)
           const userIds = rawComments.map(({ writerId }) => writerId)
-          console.log('userIds:', userIds)
+
           W.getUsersInfoById(userIds).then(usersInfo => {
-            console.log('usersInfo:', usersInfo)
             this.rawComments = rawComments
             this.usersInfo = usersInfo
-
-            console.log('data:', this.rawComments, this.usersInfo)
             resolve()
           })
         }),

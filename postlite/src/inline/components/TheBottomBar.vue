@@ -92,7 +92,7 @@ export default {
   color: #ffffff;
 }
 
-.comments span{
-    margin-right: 5px;
+.comments span {
+  margin-right: 5px;
 }
 </style>

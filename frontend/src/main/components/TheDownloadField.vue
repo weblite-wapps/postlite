@@ -20,8 +20,7 @@ export default {
   props: {
     fileObj: {
       type: Object,
-      default: () =>
-        Object.create({
+      default: () =>({
           name: 'sober',
           size: '2.96 Mb',
           url:

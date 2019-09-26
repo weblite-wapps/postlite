@@ -30,7 +30,7 @@ const { R, W } = window
 export default {
   name: 'App',
 
-  components: { AppBar, ImageField, PostField, DownloadField },
+  components: { AppBar, ImageField, PostField, DownloadField, CommentsField },
 
   data() {
     return { post: {} }

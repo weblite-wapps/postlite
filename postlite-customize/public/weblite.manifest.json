@@ -1,6 +1,6 @@
 {
-  "name": "customize-post",
-  "id": "5d8cf15c01dbd77775ee5022",
+  "name": "پست",
+  "id": "5d8e680d01dbd77775ee5024",
   "searchable": true,
   "instantiable": false,
   "userInfo": true,
@@ -8,5 +8,5 @@
   "servIndexes": {
     "main": "index"
   },
-  "version": "0.1.1"
+  "version": "0.1.31"
 }

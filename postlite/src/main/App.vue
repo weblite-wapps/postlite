@@ -4,8 +4,10 @@
     <div :class="$style.app_content">
       <ImageField :class="$style.image_field" :image-url="post.image.url" />
       <PostField :post-text="post.text" :post-title="post.title" />
-      <hr />
-      <DownloadField :file-obj="post.file" />
+      <template v-if="post.file">
+        <hr />
+        <DownloadField :file-obj="post.file" />
+      </template>
       <hr />
       <CommentsField :wis-id="wisId" :user-id="userId" />
     </div>

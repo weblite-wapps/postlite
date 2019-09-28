@@ -1,6 +1,8 @@
 const { W } = window;
 
-export default vueRoot =>
+export default vueRoot => {
+  vueRoot.wisId = W.wisId
+
   W.setHooks({
     wappWillStart(start) {
       W.loadData().then(
@@ -8,7 +10,6 @@ export default vueRoot =>
           vueRoot.name = name;
           vueRoot.userId = id;
           vueRoot.creator = creator;
-          vueRoot.wisId = W.wisId;
           vueRoot.post = post;
 
           start();
@@ -16,3 +17,4 @@ export default vueRoot =>
       );
     }
   });
+}

@@ -4,7 +4,7 @@
     <div :class="$style.gray_bar">
       <div :class="$style.comments">
         <img src="comments.svg" />
-        <span :class="$style.comments_count">{{comments | toPersian}}</span>
+        <span :class="$style.comments_count">{{commentsCount | toPersian}}</span>
       </div>
       <div v-if="attached" :class="$style.attach_btn">
         <img src="small-attach.svg" />
@@ -21,9 +21,9 @@ export default {
     seeMore: {
       type: Function,
     },
-    comments: {
+    commentsCount: {
       type: Number,
-      default: 114,
+      default: 0,
     },
     attached: {
       type: Boolean,

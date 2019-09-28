@@ -7,6 +7,7 @@
         :body="comment.body"
         :firstname="comment.firstname"
         :lastname="comment.lastname"
+        :date="comment.createdAt"
         :profile-image="comment.profileImage"
         :from-me="comment.fromMe"
       />
@@ -15,6 +16,8 @@
       <textarea
         :class="$style.comment_input"
         type="text"
+        @click="scrollToEnd"
+        @keyup.enter.exact="sendComment"
         v-model="currentComment"
         placeholder="متن پاسخ خود را وارد کنید"
       />
@@ -32,7 +35,6 @@
           v-else
           :class="$style.send_btn"
           @click="sendComment"
-          @keyup.enter.exact="sendComment"
         >
           <img src="send.svg" />
         </button>
@@ -62,6 +64,9 @@ export default {
     wisId: {
       type: String,
     },
+    scrollToEnd:{
+      type: Function,
+    }
   },
   data: () => ({
     rawComments: [],
@@ -78,9 +83,9 @@ export default {
   },
   computed: {
     comments() {
-      const res = this.rawComments.map(({ writerId, body, date, _id }) => ({
+      const res = this.rawComments.map(({ writerId, body, createdAt, _id }) => ({
         ...this.usersInfo[writerId],
-        date,
+        createdAt,
         body,
         fromMe: writerId === this.userId,
         _id,
@@ -112,6 +117,7 @@ export default {
         .then(this.updateComments)
         .then(() => {
           this.isLoading = false
+          this.scrollToEnd()
         })
         .catch(console.log)
     },
@@ -119,7 +125,6 @@ export default {
       return new Promise(resolve =>
         getAllComments(this.wisId).then(rawComments => {
           const userIds = rawComments.map(({ writerId }) => writerId)
-
           W.getUsersInfoById(userIds).then(usersInfo => {
             this.rawComments = rawComments
             this.usersInfo = usersInfo
@@ -133,15 +138,12 @@ export default {
 </script>
 
 <style module>
-.container {
-  height: 55vh;
-}
 .comments {
-  height: calc(100% - 55px);
+  min-height: 10px;
   width: 100%;
   overflow: scroll;
   box-sizing: border-box;
-  padding: 0 20px;
+  padding: 0 20px 55px 20px;
 }
 .send_box {
   display: flex;
@@ -149,6 +151,9 @@ export default {
   align-content: center;
   align-items: center;
   height: 55px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
   box-sizing: border-box;
   background: #777777;
 }
@@ -159,7 +164,7 @@ export default {
   width: 100%;
   height: 35px;
   max-height: 75px;
-  min-height: 3۵px;
+  min-height: 35px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 11px;
   padding: 10px 15px;

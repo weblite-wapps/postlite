@@ -1,5 +1,5 @@
 .<template>
-  <img :src="imageUrl" alt="post-image">
+  <img :src="imageUrl" style="{object-fit: cover}" alt="post-image">
 </template>
 
 <script>

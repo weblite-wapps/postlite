@@ -2,24 +2,20 @@
   <div :class="$style.bar_container">
     <button :class="$style.more_button" @click="seeMore">مشاهده ادامه</button>
     <div :class="$style.gray_bar">
-      <button :class="$style.comments">
+      <div :class="$style.comments">
         <img src="comments.svg" />
-        <span :class="$style.comments_count">{{commentsCount}}</span>
-      </button>
-      <button v-if="attached" :class="$style.attach_btn">
+        <span :class="$style.comments_count">{{comments | toPersian}}</span>
+      </div>
+      <div v-if="attached" :class="$style.attach_btn">
         <img src="small-attach.svg" />
-      </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-String.prototype.toPersianDigits = function() {
-  var id = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
-  return this.replace(/[0-9]/g, function(w) {
-    return id[+w]
-  })
-}
+//utils
+import toPersianDigits from '../helper/function/persianDigits'
 export default {
   props: {
     seeMore: {
@@ -34,22 +30,24 @@ export default {
       default: true,
     },
   },
-  computed: {
-    commentsCount() {
-      return this.comments.toString().toPersianDigits()
+  filters: {
+    toPersian(str) {
+      return toPersianDigits(str.toString())
     },
   },
 }
 </script>
 
 <style module>
-.bar_contairner {
+.bar_container {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .more_button {
   box-sizing: border-box;
   width: 75px;
+  border: none;
   font-weight: 500;
   height: 25px;
   background: #7dd9de 0% 0% no-repeat padding-box;
@@ -75,24 +73,24 @@ export default {
   border-radius: 10px;
 }
 .attach_btn img {
-  margin-right: 2px;
-  min-width: 11px;
-  min-height: 12px;
+  min-width: 12px;
+  min-height: 13px;
 }
 .comments {
-  min-width: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 35px;
+  padding: 0 5px;
   height: 20px;
   background: #cccccc 0% 0% no-repeat padding-box;
   border-radius: 10px;
 }
 .comments_count {
+  margin-right: 5px;
   text-align: center;
   font-size: 12px;
   letter-spacing: -0.08px;
   color: #ffffff;
-}
-
-.comments span {
-  margin-right: 5px;
 }
 </style>

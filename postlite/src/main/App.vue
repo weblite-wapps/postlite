@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.root">
     <AppBar />
-    <div :class="$style.app_content">
+    <div :class="$style.app_content" id="c--app-content">
       <ImageField :class="$style.image_field" :image-url="post.image.url" />
       <PostField :post-text="post.text" :post-title="post.title" />
       <template v-if="post.file">
@@ -9,7 +9,7 @@
         <DownloadField :file-obj="post.file" />
       </template>
       <hr />
-      <CommentsField :wis-id="wisId" :user-id="userId" />
+      <CommentsField :wis-id="wisId" :user-id="userId" :scroll-to-end="scrollToEnd" />
     </div>
   </div>
 </template>
@@ -44,7 +44,12 @@ export default {
     W && webliteHandler(this)
   },
 
-  methods: {},
+  methods: {
+    scrollToEnd() {
+      var container = this.$el.querySelector('#c--app-content')
+      container.scrollTop = container.scrollHeight
+    },
+  },
 }
 </script>
 
@@ -61,7 +66,11 @@ export default {
   overflow: scroll;
 }
 .image_field {
-  width: 100%;
+  object-fit: contain;
+  width: auto;
+  margin: auto;
+  max-width: 100%;
+  display: block;
 }
 hr {
   border-top: 1px solid #cccccc;

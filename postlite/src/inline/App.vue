@@ -70,6 +70,8 @@ export default {
 
 .image_field {
   height: calc((100% - 37px) * 0.6);
+  object-fit: contain;
+  background: #eeffff;
   width: 100%;
   box-sizing: border-box;
 }
@@ -84,10 +86,10 @@ export default {
 }
 
 .buttom_bar {
-  margin: 2px 0 17px 0;
+  margin-top: 2px;
+  padding: 0 12px 10px 12px;
   height: 37px;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 12px;
 }
 </style>

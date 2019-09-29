@@ -2,7 +2,7 @@
   <div :class="$style.root">
     <AppBar />
     <div :class="$style.app_content" id="c--app-content">
-      <ImageField :class="$style.image_field" :image-url="post.image.url" />
+      <ImageField v-if="post.image" :class="$style.image_field" :image-url="post.image.url" />
       <PostField :post-text="post.text" :post-title="post.title" />
       <template v-if="post.file">
         <hr />

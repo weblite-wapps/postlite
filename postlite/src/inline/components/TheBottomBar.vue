@@ -4,7 +4,16 @@
     <div :class="$style.gray_bar">
       <div :class="$style.comments">
         <img src="comments.svg" />
-        <span :class="$style.comments_count">{{commentsCount | toPersian}}</span>
+        <span v-if="!isLoading" :class="$style.comments_count">{{commentsCount | toPersian}}</span>
+        <Loading
+          v-else
+          :width="10"
+          :height="10"
+          :class="$style.loading"
+          color="#FFFFFF"
+          :active.sync="isLoading"
+          :is-full-page="false"
+        />
       </div>
       <div v-if="attached" :class="$style.attach_btn">
         <img src="small-attach.svg" />
@@ -14,21 +23,39 @@
 </template>
 
 <script>
+//components
+import Loading from 'vue-loading-overlay'
 //utils
+import { getCommentsCount } from '../helper/function/handleRequests'
 import toPersianDigits from '../helper/function/persianDigits'
 export default {
   props: {
     seeMore: {
       type: Function,
     },
-    commentsCount: {
-      type: Number,
-      default: 0,
-    },
     attached: {
       type: Boolean,
-      default: true,
     },
+    wisId:{
+      type: String,
+    },
+  },
+  components: {
+    Loading,
+  },
+  mounted() {
+    getCommentsCount(this.wisId)
+      .then(res => {
+        this.commentsCount = res
+        this.isLoading = false
+      })
+      .catch(console.log)
+  },
+  data() {
+    return {
+      commentsCount: '',
+      isLoading: true,
+    }
   },
   filters: {
     toPersian(str) {
@@ -92,5 +119,8 @@ export default {
   font-size: 12px;
   letter-spacing: -0.08px;
   color: #ffffff;
+}
+.loading {
+  margin-right: 5px;
 }
 </style>

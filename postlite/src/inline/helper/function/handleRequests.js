@@ -5,7 +5,7 @@ import bus from './bus'
 // config
 import config from '../../config'
 
-export const commentsCount = wisId =>
+export const getCommentsCount = wisId =>
   request
     .get(config.comments.server + '/countComments/')
     .set('Access-Control-Allow-Origin', '*')

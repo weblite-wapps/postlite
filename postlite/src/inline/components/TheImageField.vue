@@ -1,5 +1,5 @@
-.<template>
-  <img :src="imageUrl" style="{object-fit: cover}" alt="post-image">
+<template>
+  <img v-if="imageUrl" :src="imageUrl" style="{object-fit: cover}" alt="post-image">
 </template>
 
 <script>

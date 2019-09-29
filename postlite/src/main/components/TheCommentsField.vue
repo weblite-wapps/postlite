@@ -16,7 +16,6 @@
       <textarea
         :class="$style.comment_input"
         type="text"
-        @click="scrollToEnd"
         @keyup.enter.exact="sendComment"
         v-model="currentComment"
         placeholder="متن پاسخ خود را وارد کنید"

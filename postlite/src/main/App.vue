@@ -65,6 +65,9 @@ export default {
   height: calc(100% - 50px);
   overflow: scroll;
 }
+.app_content::-webkit-scrollbar {
+  width: 0 !important;
+}
 .image_field {
   object-fit: contain;
   width: auto;

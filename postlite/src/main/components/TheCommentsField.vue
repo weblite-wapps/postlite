@@ -30,11 +30,7 @@
           :active.sync="isLoading"
           :is-full-page="false"
         />
-        <button
-          v-else
-          :class="$style.send_btn"
-          @click="sendComment"
-        >
+        <button v-else :class="$style.send_btn" @click="sendComment">
           <img src="send.svg" />
         </button>
       </div>
@@ -63,9 +59,9 @@ export default {
     wisId: {
       type: String,
     },
-    scrollToEnd:{
+    scrollToEnd: {
       type: Function,
-    }
+    },
   },
   data: () => ({
     rawComments: [],
@@ -82,13 +78,15 @@ export default {
   },
   computed: {
     comments() {
-      const res = this.rawComments.map(({ writerId, body, createdAt, _id }) => ({
-        ...this.usersInfo[writerId],
-        createdAt,
-        body,
-        fromMe: writerId === this.userId,
-        _id,
-      }))
+      const res = this.rawComments.map(
+        ({ writerId, body, createdAt, _id }) => ({
+          ...this.usersInfo[writerId],
+          createdAt,
+          body,
+          fromMe: writerId === this.userId,
+          _id,
+        }),
+      )
 
       return res
 
@@ -140,7 +138,6 @@ export default {
 .comments {
   min-height: 10px;
   width: 100%;
-  overflow: scroll;
   box-sizing: border-box;
   padding: 0 20px 55px 20px;
 }
@@ -170,6 +167,9 @@ export default {
   font: 12px IranYekan;
   border: none;
   resize: none;
+}
+.comment_input::-webkit-scrollbar {
+  width: 0 !important;
 }
 .send_indicator {
   height: 100%;

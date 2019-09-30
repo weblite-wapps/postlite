@@ -16,7 +16,7 @@
         :class="$style.comment_input"
         type="text"
         v-model="currentComment"
-        placeholder="متن پاسخ خود را وارد کنید"
+        placeholder="نظر خود را ارسال کنید"
       />
       <div :class="$style.send_indicator">
         <Loading

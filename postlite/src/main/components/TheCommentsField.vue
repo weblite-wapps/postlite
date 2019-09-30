@@ -18,7 +18,7 @@
         type="text"
         @keyup.enter.exact="sendComment"
         v-model="currentComment"
-        placeholder="متن پاسخ خود را وارد کنید"
+        placeholder="نظر خود را ارسال کنید"
       />
       <div :class="$style.send_indicator">
         <Loading

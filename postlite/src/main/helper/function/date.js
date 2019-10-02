@@ -47,5 +47,5 @@ export const convertToPersianFormat = date => {
 
   return `${weekDayMap[weekDay]} ${toPersianNumber(dateArray[2])} ${
     months[dateArray[1] - 1]
-  } - ${toPersianNumber(hour)}:${toPersianNumber(minutes)}`
+    } - ${toPersianNumber(hour)}:${toPersianNumber(minutes)}`
 }

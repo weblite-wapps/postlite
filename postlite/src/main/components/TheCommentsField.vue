@@ -14,9 +14,13 @@
     </div>
     <div :class="$style.send_box">
       <textarea
+        ref="comment_textarea"
         :class="$style.comment_input"
         type="text"
-        @keyup.enter.exact="sendComment"
+        rows="1"
+        @keydown.enter.exact="sendComment"
+        @keyup.enter.exact.prevent
+        @keydown.enter.exact.prevent
         v-model="currentComment"
         placeholder="نظر خود را ارسال کنید"
       />
@@ -43,6 +47,7 @@
 import Comment from './CommentItem'
 import Loading from 'vue-loading-overlay'
 //utils
+import * as autosize from 'autosize'
 import {
   getAllComments,
   postComment,
@@ -69,13 +74,6 @@ export default {
     currentComment: '',
     isLoading: false,
   }),
-  mounted() {
-    this.updateComments()
-      .then(() => {
-        this.isLoading = false
-      })
-      .catch(console.log)
-  },
   computed: {
     comments() {
       const res = this.rawComments.map(
@@ -103,13 +101,24 @@ export default {
       // ]
     },
   },
+  mounted() {
+    var commentInput = this.$el.querySelectorAll('textarea')
+    autosize(commentInput)
+
+    this.updateComments()
+      .then(() => {
+        this.isLoading = false
+      })
+      .catch(console.log)
+  },
   methods: {
     sendComment() {
       const commentToSubmit = this.currentComment
-
-      this.isLoading = true
       this.currentComment = ''
-
+      //setting height hardcoded because autosize didnt worked here.
+      this.$refs.comment_textarea.style += 'height: 38px;'
+      if (!commentToSubmit) return
+      this.isLoading = true
       postComment(this.wisId, this.userId, commentToSubmit)
         .then(this.updateComments)
         .then(() => {
@@ -146,7 +155,6 @@ export default {
   flex-direction: row-reverse;
   align-content: center;
   align-items: center;
-  height: 55px;
   width: 100vw;
   position: fixed;
   bottom: 0;
@@ -156,17 +164,18 @@ export default {
 .comment_input {
   direction: rtl;
   box-sizing: border-box;
+  margin: 10px 0;
   margin-right: 10px;
   width: 100%;
-  height: 35px;
-  max-height: 75px;
-  min-height: 35px;
+  max-height: 70px;
+  min-height: 38px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 11px;
   padding: 10px 15px;
-  font: 12px IranYekan;
+  font: 13px IranYekan;
   border: none;
   resize: none;
+  overflow: hidden scroll;
 }
 .comment_input::-webkit-scrollbar {
   width: 0 !important;

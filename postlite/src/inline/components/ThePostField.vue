@@ -35,5 +35,9 @@ export default {
   letter-spacing: -0.06px;
   text-align: justify;
   overflow: hidden;
+  max-height: 90px;
+}
+.summary::-webkit-scrollbar {
+  width: 0 !important;
 }
 </style>

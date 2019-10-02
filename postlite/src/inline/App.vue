@@ -1,13 +1,15 @@
 <template>
   <div :class="$style.root">
     <ImageField :class="$style.image_field" :image-url="post.image && post.image.url" />
-    <PostField :class="$style.post_field" :title="post.title" :summary="post.summary" />
-    <BottomBar
-      :class="$style.buttom_bar"
-      :see-more="handleOpenInX"
-      :attached="!!post.file"
-      :wis-id="wisId"
-    />
+    <div :class="$style.flexible_container">
+      <PostField :class="$style.post_field" :title="post.title" :summary="post.summary" />
+      <BottomBar
+        :class="$style.buttom_bar"
+        :see-more="handleOpenInX"
+        :attached="!!post.file"
+        :wis-id="wisId"
+      />
+    </div>
   </div>
 </template>
 
@@ -58,32 +60,34 @@ export default {
 
 <style module>
 .root {
-  /* position: relative;
-  width: 350px;
-  min-height: 450px;
-  max-height: 450px; */
+  display: flex;
+  flex-direction: column;
   background-color: white;
   font-family: IranYekan;
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
-  display: block;
   border: 1px #e0e0e0 solid;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .image_field {
-  height: calc((100% - 37px) * 0.6);
+  height: 100%;
+  overflow: hidden;
   object-fit: contain;
   background: #eeffff;
   width: 100%;
   box-sizing: border-box;
 }
 
+.flexible_container{
+  display: flex;
+  flex-direction: column;
+}
+
 .post_field {
   margin-top: -5px;
-  height: calc((100% - 37px) * 0.4);
   width: 100%;
   box-sizing: border-box;
   padding: 0 12px;
@@ -91,10 +95,11 @@ export default {
 }
 
 .buttom_bar {
-  margin-top: 2px;
+  margin-top: 5px;
   padding: 0 12px 10px 12px;
   height: 37px;
   width: 100%;
   box-sizing: border-box;
 }
+
 </style>

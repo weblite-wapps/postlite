@@ -69,10 +69,8 @@ export default {
   width: 0 !important;
 }
 .image_field {
-  object-fit: contain;
-  width: auto;
-  margin: auto;
-  max-width: 100%;
+  width: 100%;
+  height: 50vh;
   display: block;
 }
 hr {

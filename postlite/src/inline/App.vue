@@ -74,9 +74,6 @@ export default {
 
 .image_field {
   height: 100%;
-  overflow: hidden;
-  object-fit: contain;
-  background: #eeffff;
   width: 100%;
   box-sizing: border-box;
 }
@@ -87,7 +84,6 @@ export default {
 }
 
 .post_field {
-  margin-top: -5px;
   width: 100%;
   box-sizing: border-box;
   padding: 0 12px;

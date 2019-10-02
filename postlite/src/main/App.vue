@@ -3,6 +3,7 @@
     <AppBar />
     <div :class="$style.app_content" id="c--app-content">
       <ImageField v-if="post.image" :class="$style.image_field" :image-url="post.image.url" />
+      <ResponseBar :class="post.image? $style.response_bar : $style.response_bar_nonimg" />
       <PostField :post-text="post.text" :post-title="post.title" />
       <template v-if="post.file">
         <hr />
@@ -19,6 +20,7 @@
 // components
 import AppBar from '../components/TheAppBar'
 import ImageField from './components/TheImageField'
+import ResponseBar from './components/TheResponseBar'
 import PostField from './components/ThePostField'
 import DownloadField from './components/TheDownloadField'
 import CommentsField from './components/TheCommentsField'
@@ -30,7 +32,14 @@ const { W } = window
 export default {
   name: 'App',
 
-  components: { AppBar, ImageField, PostField, DownloadField, CommentsField },
+  components: {
+    AppBar,
+    ImageField,
+    PostField,
+    DownloadField,
+    CommentsField,
+    ResponseBar,
+  },
 
   data() {
     return {
@@ -72,6 +81,17 @@ export default {
   width: 100%;
   height: 50vh;
   display: block;
+  z-index: 10;
+}
+.response_bar {
+  position: relative;
+  margin: -30px 0 0 25px;
+  z-index: 100;
+  width: 140px;
+}
+.response_bar_nonimg {
+  padding: 0 10px;
+  margin-top: 10px;
 }
 hr {
   border-top: 1px solid #cccccc;

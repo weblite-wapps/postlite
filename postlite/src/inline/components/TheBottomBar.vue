@@ -39,7 +39,7 @@
 //components
 import Loading from 'vue-loading-overlay'
 //utils
-import { getCommentsCount } from '../helper/function/handleRequests'
+import { getCommentsCount } from '../../helper/handleRequests'
 import toPersianDigits from '../helper/function/persianDigits'
 export default {
   props: {

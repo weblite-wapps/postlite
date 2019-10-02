@@ -51,7 +51,7 @@ import * as autosize from 'autosize'
 import {
   getAllComments,
   postComment,
-} from '../helper/function/handleRequests.js'
+} from '../../helper/handleRequests'
 // W
 const { W } = window
 

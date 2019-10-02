@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
-    <img :class="$style.blured" :src="imageUrl" />
-    <img :class="$style.image" :src="imageUrl" />
+    <img :class="$style.blured" :src="fakeImg" />
+    <img :class="$style.image" :src="fakeImg" />
   </div>
 </template>
 

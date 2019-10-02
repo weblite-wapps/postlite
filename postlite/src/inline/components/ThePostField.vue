@@ -26,12 +26,12 @@ export default {
   direction: rtl;
 }
 .title {
-  font-size: 13px;
+  font: Normal 13.5px/21px IRANYekan;
   letter-spacing: -0.08px;
 }
 .summary {
+  font: Normal 9.5px/13px IRANYekan;
   margin: 0;
-  font-size: 9px;
   letter-spacing: -0.06px;
   text-align: justify;
   overflow: hidden;

@@ -34,5 +34,7 @@ export default {
   font: Normal 12px/21px IranYEKAN;
   letter-spacing: -0.08px;
   text-align: justify;
+  white-space: pre-line;
+  word-break: break-word;
 }
 </style>

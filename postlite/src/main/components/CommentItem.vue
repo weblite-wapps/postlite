@@ -18,7 +18,7 @@
     </div>
     <div>
       <p
-        :class="['body']"
+        class="body"
         :style="fromMe? {'margin-left': '43px'} : {'margin-right': '43px'}"
       >{{body}}</p>
     </div>
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-Î .container {
+.container {
   margin-bottom: 5px;
   display: block;
   width: 100%;
@@ -112,6 +112,8 @@ export default {
   line-height: 21px;
   text-align: right;
   letter-spacing: -0.08px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 .info_container {
   width: 100%;

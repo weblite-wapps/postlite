@@ -36,6 +36,8 @@ export default {
   text-align: justify;
   overflow: hidden;
   max-height: 90px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 .summary::-webkit-scrollbar {
   width: 0 !important;

@@ -2,9 +2,22 @@
   <div :class="$style.bar_container">
     <button :class="$style.more_button" @click="seeMore">مشاهده ادامه</button>
     <div :class="$style.gray_bar">
-      <div :class="$style.comments">
+      <div :class="$style.status_label">
         <img src="comments.svg" />
-        <span v-if="!isLoading" :class="$style.comments_count">{{commentsCount | toPersian}}</span>
+        <span v-if="!isLoading" :class="$style.count_span">{{commentsCount | toPersian}}</span>
+        <Loading
+          v-else
+          :width="10"
+          :height="10"
+          :class="$style.loading"
+          color="#FFFFFF"
+          :active.sync="isLoading"
+          :is-full-page="false"
+        />
+      </div>
+      <div :class="$style.status_label">
+        <img src="like.svg" />
+        <span v-if="!isLoading" :class="$style.count_span">{{likesCount | toPersian}}</span>
         <Loading
           v-else
           :width="10"
@@ -54,6 +67,7 @@ export default {
   data() {
     return {
       commentsCount: '',
+      likesCount: 12,
       isLoading: true,
     }
   },
@@ -86,11 +100,12 @@ export default {
 .gray_bar {
   width: calc(100% - 75px);
   display: inline-flex;
-  align-items: flex-end;
   direction: rtl;
 }
-.attach_btn {
+.gray_bar div:not(:first-child){
   margin-right: 5px;
+}
+.attach_btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +118,7 @@ export default {
   min-width: 12px;
   min-height: 13px;
 }
-.comments {
+.status_label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +128,7 @@ export default {
   background: #cccccc 0% 0% no-repeat padding-box;
   border-radius: 10px;
 }
-.comments_count {
+.count_span {
   margin-right: 5px;
   text-align: center;
   font-size: 12px;

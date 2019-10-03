@@ -35,10 +35,10 @@ export default {
   components: {
     AppBar,
     ImageField,
+    ResponseBar,
     PostField,
     DownloadField,
     CommentsField,
-    ResponseBar,
   },
 
   data() {

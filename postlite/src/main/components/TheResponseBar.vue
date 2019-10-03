@@ -9,40 +9,26 @@
       <img src="like.svg" class="status-img status-like" />
 
       <span v-if="!isLoadingLikes" class="count-span">{{likesCount | toPersian}}</span>
-      <Loading
-        v-else
-        :width="11"
-        :height="11"
-        :style="{'margin-right': '9px'}"
-        color="#818181"
-        :active.sync="isLoadingLikes"
-      />
+      <div v-else class="spinner-container" :style="{'margin': '2px 7px 0 0'}">
+        
+        <div class="spinner" />
+      </div>
 
       <img src="comments.svg" class="status-img status-comment" />
 
       <span v-if="!isLoadingComments" class="count-span">{{commentsCount | toPersian}}</span>
-      <Loading
-        v-else
-        :width="11"
-        :style="{'margin-left': '1.5px'}"
-        :height="11"
-        color="#818181"
-        :active.sync="isLoadingComments"
-      />
+      <div v-else class="spinner-container" :style="{'margin': '0px 0 0 1.5px'}">
+        <div class="spinner" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-//components
-import Loading from 'vue-loading-overlay'
 //utils
 import toPersianDigits from '../../helper/persianDigits'
 import { getCommentsCount } from '../../helper/handleRequests.js'
 export default {
-  components: {
-    Loading,
-  },
   props: {
     wisId: {
       type: String,
@@ -135,5 +121,56 @@ export default {
 .liked {
   filter: invert(69%) sepia(65%) saturate(4970%) hue-rotate(325deg)
     brightness(89%) contrast(86%);
+}
+.spinner-container{
+ position: relative;
+ top: 0.5px;
+}
+.spinner {
+  height: 11px;
+  width: 11px;
+  margin: 0px auto;
+  -webkit-animation: rotation 0.6s infinite linear;
+  -moz-animation: rotation 0.6s infinite linear;
+  -o-animation: rotation 0.6s infinite linear;
+  animation: rotation 0.6s infinite linear;
+  border-left: 1px solid #81818150;
+  border-right: 1px solid #81818150;
+  border-bottom: 1px solid #81818150;
+  border-top: 1px solid #818181ff;
+  border-radius: 100%;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 </style>

@@ -8,14 +8,27 @@
     <div class="counts-container">
       <img src="like.svg" class="status-img status-like" />
 
-      <span v-if="!isLoadingLikes" class="count-span">۳۲۴</span>
-      <Loading v-else :width="11" :height="11" :style="{'margin-right': '9px'}" color="#818181" :active.sync="isLoadingLikes" />
+      <span v-if="!isLoadingLikes" class="count-span">{{likesCount | toPersian}}</span>
+      <Loading
+        v-else
+        :width="11"
+        :height="11"
+        :style="{'margin-right': '9px'}"
+        color="#818181"
+        :active.sync="isLoadingLikes"
+      />
 
       <img src="comments.svg" class="status-img status-comment" />
 
-      <span v-if="!isLoadingComments" class="count-span">۸۹۸</span>
-      <Loading v-else :width="11" :style="{'margin-left': '1.5px'}" :height="11" color="#818181" :active.sync="isLoadingComments" />
-
+      <span v-if="!isLoadingComments" class="count-span">{{commentsCount | toPersian}}</span>
+      <Loading
+        v-else
+        :width="11"
+        :style="{'margin-left': '1.5px'}"
+        :height="11"
+        color="#818181"
+        :active.sync="isLoadingComments"
+      />
     </div>
   </div>
 </template>
@@ -24,6 +37,7 @@
 //components
 import Loading from 'vue-loading-overlay'
 //utils
+import toPersianDigits from '../../helper/persianDigits'
 import { getCommentsCount } from '../../helper/handleRequests.js'
 export default {
   components: {
@@ -36,17 +50,30 @@ export default {
   },
   data() {
     return {
-      commentsCount: '12',
-      likesCount: '315',
+      commentsCount: '2',
+      likesCount: '3',
       isliked: false,
-      isLoadingComments: false,
-      isLoadingLikes: false,
+      isLoadingComments: true,
+      isLoadingLikes: true,
     }
   },
-  mounted() {},
+  mounted() {
+    getCommentsCount(this.wisId)
+      .then(res => {
+        this.commentsCount = res
+        this.isLoadingComments = false
+      })
+      .catch(console.log)
+    //getlikes
+  },
   methods: {
     likePost() {
       this.isliked = !this.isliked
+    },
+  },
+  filters: {
+    toPersian(str) {
+      return toPersianDigits(str.toString())
     },
   },
 }

@@ -7,17 +7,28 @@
     </div>
     <div class="counts-container">
       <img src="like.svg" class="status-img status-like" />
-      <span>۳۲۴</span>
+
+      <span v-if="!isLoadingLikes" class="count-span">۳۲۴</span>
+      <Loading v-else :width="11" :height="11" :style="{'margin-right': '9px'}" color="#818181" :active.sync="isLoadingLikes" />
+
       <img src="comments.svg" class="status-img status-comment" />
-      <span>۸۹۸</span>
+
+      <span v-if="!isLoadingComments" class="count-span">۸۹۸</span>
+      <Loading v-else :width="11" :style="{'margin-left': '1.5px'}" :height="11" color="#818181" :active.sync="isLoadingComments" />
+
     </div>
   </div>
 </template>
 
 <script>
+//components
+import Loading from 'vue-loading-overlay'
 //utils
 import { getCommentsCount } from '../../helper/handleRequests.js'
 export default {
+  components: {
+    Loading,
+  },
   props: {
     wisId: {
       type: String,
@@ -28,14 +39,15 @@ export default {
       commentsCount: '12',
       likesCount: '315',
       isliked: false,
-      // isLoading: true,
+      isLoadingComments: false,
+      isLoadingLikes: false,
     }
   },
   mounted() {},
   methods: {
-      likePost(){
-          this.isliked = !this.isliked
-      }
+    likePost() {
+      this.isliked = !this.isliked
+    },
   },
 }
 </script>
@@ -64,10 +76,14 @@ export default {
   width: 28px;
   height: 26px;
 }
-span {
+.counts-container * {
+  margin-right: 3.5px;
+}
+.count-span {
   font: Bold 12px/21px IRANYekan;
   letter-spacing: -0.08px;
   color: #818181;
+  margin-right: 7px;
   position: relative;
   bottom: 1px;
 }
@@ -75,14 +91,9 @@ span {
   display: inline-flex;
   align-items: inherit;
 }
-.counts-container * {
-  margin-right: 3.5px;
-}
-.counts-container :nth-child(2) {
-  margin-right: 8px;
-}
 .status-img {
-  filter: invert(58%) sepia(0%) saturate(1271%) hue-rotate(191deg) brightness(88%) contrast(83%);
+  filter: invert(58%) sepia(0%) saturate(1271%) hue-rotate(191deg)
+    brightness(88%) contrast(83%);
 }
 .status-like {
   width: 12px;
@@ -95,6 +106,7 @@ span {
 .notliked {
 }
 .liked {
-  filter: invert(69%) sepia(65%) saturate(4970%) hue-rotate(325deg) brightness(89%) contrast(86%);
+  filter: invert(69%) sepia(65%) saturate(4970%) hue-rotate(325deg)
+    brightness(89%) contrast(86%);
 }
 </style>

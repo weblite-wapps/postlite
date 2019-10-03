@@ -3,7 +3,10 @@
     <AppBar />
     <div :class="$style.app_content" id="c--app-content">
       <ImageField v-if="post.image" :class="$style.image_field" :image-url="post.image.url" />
-      <ResponseBar :wis-id="wisId" :class="post.image? $style.response_bar : $style.response_bar_nonimg" />
+      <ResponseBar
+        :wis-id="wisId"
+        :class="post.image? $style.response_bar : $style.response_bar_nonimg"
+      />
       <PostField :post-text="post.text" :post-title="post.title" />
       <template v-if="post.file">
         <hr />
@@ -73,6 +76,7 @@ export default {
 .app_content {
   height: calc(100% - 50px);
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 .app_content::-webkit-scrollbar {
   width: 0 !important;

@@ -35,7 +35,7 @@ export default {
   letter-spacing: -0.06px;
   text-align: justify;
   overflow: hidden;
-  max-height: 90px;
+  max-height: 91px;
   white-space: pre-line;
   word-break: break-word;
 }

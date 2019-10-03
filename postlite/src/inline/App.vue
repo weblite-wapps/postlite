@@ -81,6 +81,7 @@ export default {
 .flexible_container{
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .post_field {

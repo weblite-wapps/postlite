@@ -1,5 +1,7 @@
-import * as R from "ramda"
+// W
+const { W } = window
 //modules
+import * as R from "ramda"
 import Vue from "vue";
 import Vuex from "vuex"
 //plugins
@@ -9,6 +11,8 @@ import { setIncommingData } from '../helper/constants/mutation-types'
 Vue.use(Vuex)
 //shareDB
 import { addLike, removeLike } from '../helper/function/changeLikes'
+//requestHandler
+import { getAllComments, postComment } from '../../helper/handleRequests'
 
 export default new Vuex.Store({
     state: {
@@ -16,22 +20,29 @@ export default new Vuex.Store({
         wisId: '',
         userId: '',
         hasLiked: '',
+        usersInfo: {},
         likesCount: 0,
+        commentsCount: 0,
+        rawComments: [],
         isLoadingLikes: true,
         isLoadingComments: true,
-        rawComments: [],
+        isLoadingCommentsCount: true,
     },
     getters: {
-        commentsCount(state) {
-            return state.rawComments.length
-        },
-        comments() {
-
+        comments(state) {
+            return state.rawComments.map(
+                ({ writerId, body, createdAt, _id }) => ({
+                    ...state.usersInfo[writerId],
+                    createdAt,
+                    body,
+                    fromMe: writerId === state.userId,
+                    _id,
+                }))
         },
         imageUrl(state) {
             return state.post.image.url
         },
-        fileObj(state){
+        fileObj(state) {
             return state.post.file
         }
     },
@@ -44,12 +55,37 @@ export default new Vuex.Store({
 
     },
     actions: {
+        updateComments({ state, commit }) {
+            return new Promise((resolve, reject) =>
+                getAllComments(state.wisId)
+                    .then(rawComments => {
+                        commit(setIncommingData, { commentsCount: rawComments.length, isLoadingCommentsCount: false })
+                        const userIds = rawComments.map(({ writerId }) => writerId)
+                        W.getUsersInfoById(userIds)
+                            .then(usersInfo => {
+                                commit(setIncommingData, { isLoadingComments: false, rawComments, usersInfo })
+                                resolve()
+                            })
+                            .catch(reject)
+                    })
+                    .catch(reject)
+            )
+        },
+        sendComment({ state, commit, dispatch }, comment) {
+            return new Promise((resolve, reject) => {
+                commit(setIncommingData, { isLoadingComments: true })
+                postComment(state.wisId, state.userId, comment)
+                    .then(() => dispatch('updateComments'))
+                    .then(resolve)
+                    .catch(reject)
+            })
+        },
         likePost({ state }) {
             if (state.isLoadingLikes)
                 return
-            else if (!state.hasLiked)
-                addLike(state.userId)
-            else removeLike(state.userId)
+            if (state.hasLiked)
+                removeLike(state.userId)
+            else addLike(state.userId)
         },
     },
     plugins: [createLogger()]

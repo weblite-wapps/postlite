@@ -6,11 +6,12 @@ import { setIncommingData } from '../constants/mutation-types'
 export default vueRoot => {
   // vueRoot.wisId = W.wisId
   store.commit(setIncommingData, { wisId: W.wisId })
+  var userId = ''
   W.setHooks({
     wappWillStart(start) {
       W.loadData().then(({ user: { name, id }, creator, customize: { post } }) => {
         // vueRoot.name = name;
-        // vueRoot.userId = id;
+        userId = id;
         // vueRoot.creator = creator;
         // vueRoot.post = post;
         store.commit(setIncommingData, { name, creator, post, userId: id })
@@ -27,7 +28,7 @@ export default vueRoot => {
 
         // vueRoot.hasLiked = likes.includes(vueRoot.userId)
         // vueRoot.likesCount = likes.length
-        store.commit(setIncommingData, { hasLiked: likes.includes(vueRoot.userId), likesCount: likes.length })
+        store.commit(setIncommingData, { hasLiked: likes.includes(userId), likesCount: likes.length })
 
       })
     }

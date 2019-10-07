@@ -18,7 +18,7 @@
         :class="$style.comment_input"
         type="text"
         rows="1"
-        @keydown.enter.exact="sendComment"
+        @keydown.enter.exact="PrepareSendComment"
         @keyup.enter.exact.prevent
         @keydown.enter.exact.prevent
         v-model="currentComment"
@@ -26,15 +26,15 @@
       />
       <div :class="$style.send_indicator">
         <Loading
-          v-if="isLoading"
+          v-if="isLoadingComments"
           :width="34"
           :height="34"
           :class="$style.loading"
           color="#FFFFFF"
-          :active.sync="isLoading"
+          :active.sync="isLoadingComments"
           :is-full-page="false"
         />
-        <button v-else :class="$style.send_btn" @click="sendComment">
+        <button v-else :class="$style.send_btn" @click="PrepareSendComment">
           <img src="send.svg" />
         </button>
       </div>
@@ -48,11 +48,8 @@ import Comment from './CommentItem'
 import Loading from 'vue-loading-overlay'
 //utils
 import * as autosize from 'autosize'
-import { getAllComments, postComment } from '../../helper/handleRequests'
 //vuex
-import { mapState } from 'vuex'
-// W
-const { W } = window
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: { Comment, Loading },
@@ -62,76 +59,28 @@ export default {
     },
   },
   data: () => ({
-    usersInfo: {},
     currentComment: '',
-    isLoading: false,
-    rawComments: [],
   }),
   computed: {
-    ...mapState(['userId', 'wisId']),
-    comments() {
-      const res = this.rawComments.map(
-        ({ writerId, body, createdAt, _id }) => ({
-          ...this.usersInfo[writerId],
-          createdAt,
-          body,
-          fromMe: writerId === this.userId,
-          _id,
-        }),
-      )
-
-      return res
-
-      // return [
-      //   {
-      //     body:
-      //       'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      //     date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-      //     fromMe: false,
-      //     firstname: 'جواد',
-      //     lastname: 'واحدی',
-      //     profileImage: '',
-      //   },
-      // ]
-    },
+    ...mapState(['userId', 'wisId', 'isLoadingComments']),
+    ...mapGetters(['comments']),
   },
   mounted() {
     var commentInput = this.$el.querySelectorAll('textarea')
     autosize(commentInput)
-
     this.updateComments()
-      .then(() => {
-        this.isLoading = false
-      })
-      .catch(console.log)
   },
   methods: {
-    sendComment() {
+    ...mapActions(['sendComment', 'updateComments']),
+    PrepareSendComment() {
       const commentToSubmit = this.currentComment
       this.currentComment = ''
       //setting height hardcoded because autosize didnt worked here.
       this.$refs.comment_textarea.style += 'height: 38px;'
       if (!commentToSubmit) return
-      this.isLoading = true
-      postComment(this.wisId, this.userId, commentToSubmit)
-        .then(this.updateComments)
-        .then(() => {
-          this.isLoading = false
-          this.scrollToEnd()
-        })
-        .catch(console.log)
-    },
-    updateComments() {
-      return new Promise(resolve =>
-        getAllComments(this.wisId).then(rawComments => {
-          const userIds = rawComments.map(({ writerId }) => writerId)
-          W.getUsersInfoById(userIds).then(usersInfo => {
-            this.rawComments = rawComments
-            this.usersInfo = usersInfo
-            resolve()
-          })
-        }),
-      )
+      this.sendComment(commentToSubmit)
+      .then(() => this.scrollToEnd())
+      .catch(console.log)
     },
   },
 }

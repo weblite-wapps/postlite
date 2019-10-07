@@ -46,17 +46,9 @@ export default {
 
   computed: mapState([
     'post',
-    'wisId',
-    'userId',
-    'hasLiked',
-    'isLoadingLikes',
-    'likesCount',
   ]),
   created() {
     W && webliteHandler(this)
-  },
-  mounted() {
-    console.log('app.vue -> ', this.post, this.likeCounts)
   },
   methods: {
     scrollToEnd() {

@@ -23,29 +23,19 @@
 </template>
 
 <script>
-// //shareDB 
+// //shareDB
 // import {addLike} from '../helper/function/changeLikes'
 //utils
 import toPersianDigits from '../../helper/persianDigits'
-import { getCommentsCount } from '../../helper/handleRequests.js'
-import { mapMutations, mapActions, mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
-  computed: mapState(['hasLiked', 'likesCount', 'isLoadingLikes', 'wisId']),
-  data() {
-    return {
-      commentsCount: '2',
-      isLoadingComments: true,
-    }
-  },
-  mounted() {
-    getCommentsCount(this.wisId)
-      .then(res => {
-        this.commentsCount = res
-        this.isLoadingComments = false
-      })
-      .catch(console.log)
-    //getlikes
-  },
+  computed: mapState([
+    'hasLiked',
+    'likesCount',
+    'commentsCount',
+    'isLoadingLikes',
+    'isLoadingCommentsCount',
+  ]),
   methods: mapActions(['likePost']),
   filters: {
     toPersian(str) {

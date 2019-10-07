@@ -43,11 +43,6 @@ export default {
       likesCount: 0,
     }
   },
-  watch: {
-    post() {
-      console.log('post in watch ', this.post)
-    },
-  },
 
   created() {
     W && webliteHandler(this)

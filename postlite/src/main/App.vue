@@ -48,7 +48,7 @@ export default {
     'post',
   ]),
   created() {
-    W && webliteHandler(this)
+    W && webliteHandler()
   },
   methods: {
     scrollToEnd() {

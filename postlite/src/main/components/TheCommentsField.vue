@@ -69,6 +69,7 @@ export default {
     var commentInput = this.$el.querySelectorAll('textarea')
     autosize(commentInput)
     this.updateComments()
+    .catch(console.log)
   },
   methods: {
     ...mapActions(['sendComment', 'updateComments']),

@@ -19,8 +19,6 @@ export default vueRoot => {
         vueRoot.isLoadingLikes = false
       })
       W.share.subscribe((likes = []) => {
-        console.log('likes:', likes)
-
         vueRoot.likesCount = likes.length
       })
     }

@@ -8,7 +8,6 @@ export const postComment = (wisId, userId, body) =>
     .post(config.comments.server + '/createComment/')
     .set('Access-Control-Allow-Origin', '*')
     .send({ body, writerId: userId, wisId, contextId: wisId })
-    .catch(console.log)
 
 export const getAllComments = wisId =>
   request
@@ -16,7 +15,6 @@ export const getAllComments = wisId =>
     .set('Access-Control-Allow-Origin', '*')
     .query({ wisId, contextId: wisId })
     .then(res => res.body)
-    .catch(console.log)
 
 export const getCommentsCount = wisId =>
   request
@@ -24,4 +22,3 @@ export const getCommentsCount = wisId =>
     .set('Access-Control-Allow-Origin', '*')
     .query({ wisId, contextId: wisId })
     .then(res => res.body)
-    .catch(console.log)

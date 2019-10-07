@@ -30,12 +30,6 @@ export default {
 
   data: () => ({}),
 
-  methods: {
-    handleAdd(d) {
-      console.log(d)
-    },
-  },
-
   created() {},
 }
 </script>

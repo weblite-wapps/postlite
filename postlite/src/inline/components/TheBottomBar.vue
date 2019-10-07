@@ -4,27 +4,27 @@
     <div :class="$style.gray_bar">
       <div :class="$style.status_label">
         <img src="comments.svg" />
-        <span v-if="!isLoading" :class="$style.count_span">{{commentsCount | toPersian}}</span>
+        <span v-if="!isLoadingComments" :class="$style.count_span">{{commentsCount | toPersian}}</span>
         <Loading
           v-else
           :width="10"
           :height="10"
           :class="$style.loading"
           color="#FFFFFF"
-          :active.sync="isLoading"
+          :active.sync="isLoadingComments"
           :is-full-page="false"
         />
       </div>
       <div :class="$style.status_label">
         <img src="like.svg" />
-        <span v-if="!isLoading" :class="$style.count_span">{{likesCount | toPersian}}</span>
+        <span v-if="!isLoadingLikes" :class="$style.count_span">{{likesCount | toPersian}}</span>
         <Loading
           v-else
           :width="10"
           :height="10"
           :class="$style.loading"
           color="#FFFFFF"
-          :active.sync="isLoading"
+          :active.sync="isLoadingLikes"
           :is-full-page="false"
         />
       </div>
@@ -49,9 +49,15 @@ export default {
     attached: {
       type: Boolean,
     },
-    wisId:{
+    wisId: {
       type: String,
     },
+    isLoadingLikes: {
+      type: Boolean,
+    },
+    likesCount: {
+      type: Number,
+    }
   },
   components: {
     Loading,
@@ -60,15 +66,14 @@ export default {
     getCommentsCount(this.wisId)
       .then(res => {
         this.commentsCount = res
-        this.isLoading = false
+        this.isLoadingComments = false
       })
       .catch(console.log)
   },
   data() {
     return {
       commentsCount: '',
-      likesCount: 12,
-      isLoading: true,
+      isLoadingComments: true,
     }
   },
   filters: {
@@ -102,7 +107,7 @@ export default {
   display: inline-flex;
   direction: rtl;
 }
-.gray_bar div:not(:first-child){
+.gray_bar div:not(:first-child) {
   margin-right: 5px;
 }
 .attach_btn {

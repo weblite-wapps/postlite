@@ -5,16 +5,24 @@ export default vueRoot => {
 
   W.setHooks({
     wappWillStart(start) {
-      W.loadData().then(
-        ({ user: { name, id }, creator, customize: { post } }) => {
-          vueRoot.name = name;
-          vueRoot.userId = id;
-          vueRoot.creator = creator;
-          vueRoot.post = post;
+      W.loadData().then(({ user: { name, id }, creator, customize: { post } }) => {
+        vueRoot.name = name;
+        vueRoot.userId = id;
+        vueRoot.creator = creator;
+        vueRoot.post = post;
 
-          start();
-        }
-      );
+        start();
+      }
+      )
+
+      W.share.getFromServer([]).then(() => {
+        vueRoot.isLoadingLikes = false
+      })
+      W.share.subscribe((likes = []) => {
+        console.log('likes:', likes)
+
+        vueRoot.likesCount = likes.length
+      })
     }
   });
 }

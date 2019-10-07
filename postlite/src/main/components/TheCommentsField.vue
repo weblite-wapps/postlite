@@ -67,9 +67,12 @@ export default {
     scrollToEnd: {
       type: Function,
     },
+    rawComments: {
+      type: Array,
+      default: [],
+    }
   },
   data: () => ({
-    rawComments: [],
     usersInfo: {},
     currentComment: '',
     isLoading: false,

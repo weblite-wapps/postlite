@@ -8,6 +8,8 @@
         :see-more="handleOpenInX"
         :attached="!!post.file"
         :wis-id="wisId"
+        :is-loading-likes="isLoadingLikes"
+        :likes-count="likesCount"
       />
     </div>
   </div>
@@ -37,6 +39,8 @@ export default {
     return {
       post: { image: { url: '' } },
       wisId: '5cd6de160583944a3a01c9de',
+      isLoadingLikes: true,
+      likesCount: 0,
     }
   },
   watch: {

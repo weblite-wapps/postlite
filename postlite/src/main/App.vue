@@ -5,6 +5,10 @@
       <ImageField v-if="post.image" :class="$style.image_field" :image-url="post.image.url" />
       <ResponseBar
         :wis-id="wisId"
+        @likePost="likePost"
+        :has-liked="hasLiked"
+        :likes-count="likesCount"
+        :is-loading-likes="isLoadingLikes"
         :class="post.image? $style.response_bar : $style.response_bar_nonimg"
       />
       <PostField :post-text="post.text" :post-title="post.title" />
@@ -32,6 +36,9 @@ import webliteHandler from './helper/function/weblite.api'
 // W
 const { W } = window
 
+//shareDB
+import { addLike, removeLike } from './helper/function/changeLikes'
+
 export default {
   name: 'App',
 
@@ -49,6 +56,9 @@ export default {
       post: { image: { url: '' } },
       wisId: '5cd6de160583944a3a01c9de',
       userId: '5c30dc0cdf7c064bfdf85f7d',
+      hasLiked: false,
+      isLoadingLikes: true,
+      likesCount: 0,
     }
   },
 
@@ -60,6 +70,10 @@ export default {
     scrollToEnd() {
       var container = this.$el.querySelector('#c--app-content')
       container.scrollTop = container.scrollHeight
+    },
+    likePost() {
+      if (!this.hasLiked) addLike(this.userId)
+      else removeLike(this.userId)
     },
   },
 }

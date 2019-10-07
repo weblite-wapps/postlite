@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="like-container">
-      <button class="like-btn" @click="likePost">
-        <img src="like.svg" :class="{'liked' : isliked}" />
+      <button class="like-btn" @click="() => !this.isLoadingLikes && this.$emit('likePost')">
+        <img src="like.svg" :class="{'liked' : hasLiked}" />
       </button>
     </div>
     <div class="counts-container">
@@ -10,10 +10,8 @@
 
       <span v-if="!isLoadingLikes" class="count-span">{{likesCount | toPersian}}</span>
       <div v-else class="spinner-container" :style="{'margin': '2px 7px 0 0'}">
-        
         <div class="spinner" />
       </div>
-
       <img src="comments.svg" class="status-img status-comment" />
 
       <span v-if="!isLoadingComments" class="count-span">{{commentsCount | toPersian}}</span>
@@ -25,6 +23,8 @@
 </template>
 
 <script>
+// //shareDB 
+// import {addLike} from '../helper/function/changeLikes'
 //utils
 import toPersianDigits from '../../helper/persianDigits'
 import { getCommentsCount } from '../../helper/handleRequests.js'
@@ -33,14 +33,23 @@ export default {
     wisId: {
       type: String,
     },
+    userId: {
+      type: String,
+    },
+    hasLiked: {
+      type: Boolean,
+    },
+    likesCount: {
+      type: Number,
+    },
+    isLoadingLikes: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       commentsCount: '2',
-      likesCount: '3',
-      isliked: false,
       isLoadingComments: true,
-      isLoadingLikes: true,
     }
   },
   mounted() {
@@ -54,7 +63,7 @@ export default {
   },
   methods: {
     likePost() {
-      this.isliked = !this.isliked
+      addLike(this.userId)
     },
   },
   filters: {
@@ -122,9 +131,9 @@ export default {
   filter: invert(69%) sepia(65%) saturate(4970%) hue-rotate(325deg)
     brightness(89%) contrast(86%);
 }
-.spinner-container{
- position: relative;
- top: 0.5px;
+.spinner-container {
+  position: relative;
+  top: 0.5px;
 }
 .spinner {
   height: 11px;

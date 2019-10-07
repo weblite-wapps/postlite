@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="like-container">
-      <button class="like-btn" @click="() => !this.isLoadingLikes && this.$emit('likePost')">
+      <button class="like-btn" @click="likePost">
         <img src="like.svg" :class="{'liked' : hasLiked}" />
       </button>
     </div>
@@ -28,24 +28,9 @@
 //utils
 import toPersianDigits from '../../helper/persianDigits'
 import { getCommentsCount } from '../../helper/handleRequests.js'
+import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
-  props: {
-    wisId: {
-      type: String,
-    },
-    userId: {
-      type: String,
-    },
-    hasLiked: {
-      type: Boolean,
-    },
-    likesCount: {
-      type: Number,
-    },
-    isLoadingLikes: {
-      type: Boolean,
-    },
-  },
+  computed: mapState(['hasLiked', 'likesCount', 'isLoadingLikes', 'wisId']),
   data() {
     return {
       commentsCount: '2',
@@ -61,11 +46,7 @@ export default {
       .catch(console.log)
     //getlikes
   },
-  methods: {
-    likePost() {
-      addLike(this.userId)
-    },
-  },
+  methods: mapActions(['likePost']),
   filters: {
     toPersian(str) {
       return toPersianDigits(str.toString())

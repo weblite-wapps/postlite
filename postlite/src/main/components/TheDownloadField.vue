@@ -18,18 +18,10 @@
 <script>
 //utils
 import fileSize from '../helper/function/fileSize'
+import { mapGetters } from 'vuex'
+
 export default {
-  props: {
-    fileObj: {
-      type: Object,
-      default: () => ({
-        name: 'sober sober sober',
-        size: 3234290,
-        url:
-          'https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg',
-      }),
-    },
-  },
+  computed: mapGetters(['fileObj']),
   filters: {
     lengthFilter(str, length) {
       if (str.length < length) return str

@@ -2,22 +2,17 @@
   <div :class="$style.root">
     <AppBar />
     <div :class="$style.app_content" id="c--app-content">
-      <ImageField v-if="post.image" :class="$style.image_field" :image-url="post.image.url" />
+      <ImageField v-if="post.image" :class="$style.image_field"/>
       <ResponseBar
-        :wis-id="wisId"
-        @likePost="likePost"
-        :has-liked="hasLiked"
-        :likes-count="likesCount"
-        :is-loading-likes="isLoadingLikes"
         :class="post.image? $style.response_bar : $style.response_bar_nonimg"
       />
-      <PostField :post-text="post.text" :post-title="post.title" />
+      <PostField />
       <template v-if="post.file">
         <hr />
-        <DownloadField :file-obj="post.file" />
+        <DownloadField />
       </template>
       <hr />
-      <CommentsField :wis-id="wisId" :user-id="userId" :scroll-to-end="scrollToEnd" />
+      <CommentsField :scroll-to-end="scrollToEnd" />
     </div>
   </div>
 </template>
@@ -35,13 +30,11 @@ import CommentsField from './components/TheCommentsField'
 import webliteHandler from './helper/function/weblite.api'
 // W
 const { W } = window
-
-//shareDB
-import { addLike, removeLike } from './helper/function/changeLikes'
+//vuex
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
-
   components: {
     AppBar,
     ImageField,
@@ -51,29 +44,24 @@ export default {
     CommentsField,
   },
 
-  data() {
-    return {
-      post: { image: { url: '' } },
-      wisId: '5cd6de160583944a3a01c9de',
-      userId: '5c30dc0cdf7c064bfdf85f7d',
-      hasLiked: false,
-      isLoadingLikes: true,
-      likesCount: 0,
-    }
-  },
-
+  computed: mapState([
+    'post',
+    'wisId',
+    'userId',
+    'hasLiked',
+    'isLoadingLikes',
+    'likesCount',
+  ]),
   created() {
     W && webliteHandler(this)
   },
-
+  mounted() {
+    console.log('app.vue -> ', this.post, this.likeCounts)
+  },
   methods: {
     scrollToEnd() {
       var container = this.$el.querySelector('#c--app-content')
       container.scrollTop = container.scrollHeight
-    },
-    likePost() {
-      if (!this.hasLiked) addLike(this.userId)
-      else removeLike(this.userId)
     },
   },
 }

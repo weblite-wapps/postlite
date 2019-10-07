@@ -6,13 +6,10 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  props: {
-    imageUrl: {
-      type: String,
-    },
-  },
   //for local test
+  computed: mapGetters(['imageUrl']),
   data() {
     return {
       fakeImg:

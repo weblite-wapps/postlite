@@ -48,36 +48,27 @@ import Comment from './CommentItem'
 import Loading from 'vue-loading-overlay'
 //utils
 import * as autosize from 'autosize'
-import {
-  getAllComments,
-  postComment,
-} from '../../helper/handleRequests'
+import { getAllComments, postComment } from '../../helper/handleRequests'
+//vuex
+import { mapState } from 'vuex'
 // W
 const { W } = window
 
 export default {
   components: { Comment, Loading },
   props: {
-    userId: {
-      type: String,
-    },
-    wisId: {
-      type: String,
-    },
     scrollToEnd: {
       type: Function,
     },
-    rawComments: {
-      type: Array,
-      default: [],
-    }
   },
   data: () => ({
     usersInfo: {},
     currentComment: '',
     isLoading: false,
+    rawComments: [],
   }),
   computed: {
+    ...mapState(['userId', 'wisId']),
     comments() {
       const res = this.rawComments.map(
         ({ writerId, body, createdAt, _id }) => ({

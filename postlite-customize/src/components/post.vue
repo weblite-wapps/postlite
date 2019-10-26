@@ -7,9 +7,9 @@
 
     <div :class="$style.responsive">
       <div :class="$style.summary_field">
-        <label for="title" :class="$style.text_label">خلاصه پست</label>
+        <label for="summary" :class="$style.text_label">خلاصه پست</label>
         <textarea
-          id="title"
+          id="summary"
           :class="[$style.text_area, $style.summary]"
           type="text"
           v-model="summary"
@@ -17,8 +17,8 @@
         />
       </div>
       <div :class="$style.post_field">
-        <label for="title" :class="$style.text_label">متن پست</label>
-        <textarea id="title" :class="[$style.text_area, $style.text]" type="text" v-model="text" />
+        <label for="text" :class="$style.text_label">متن پست</label>
+        <textarea id="text" :class="[$style.text_area, $style.text]" type="text" v-model="text" />
       </div>
     </div>
   </div>
@@ -29,8 +29,6 @@
 // components
 // helper
 
-// W
-const { W, R } = window
 
 export default {
   name: 'App',

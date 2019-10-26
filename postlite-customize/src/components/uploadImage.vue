@@ -17,9 +17,6 @@
 // components
 // helper
 
-// W
-const { W, R } = window
-
 export default {
   name: 'uploadImage',
 

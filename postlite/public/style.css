@@ -9,6 +9,10 @@ body {
   outline: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 @font-face {
   font-family: iranyekan;
   font-style: normal;

@@ -7,8 +7,8 @@
       <div :class="$style.info_container">
         <img src="attach.svg" />
         <div :class="$style.title_container">
-          <span :class="$style.title">{{fileObj.name}}</span>
-          <span :class="$style.subtitle">{{fileObj.size}}</span>
+          <span :class="$style.title">{{fileObj.name | lengthFilter(16)}}</span>
+          <span :class="$style.subtitle">{{fileObj.size | humanReadableSize}}</span>
         </div>
       </div>
     </div>
@@ -16,16 +16,19 @@
 </template>
 
 <script>
+//utils
+import fileSize from '../helper/function/fileSize'
+import { mapGetters } from 'vuex'
+
 export default {
-  props: {
-    fileObj: {
-      type: Object,
-      default: () =>({
-          name: 'sober',
-          size: '2.96 Mb',
-          url:
-            'https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg',
-        }),
+  computed: mapGetters(['fileObj']),
+  filters: {
+    lengthFilter(str, length) {
+      if (str.length < length) return str
+      return str.substring(0, length) + '...'
+    },
+    humanReadableSize(size) {
+      return fileSize(size)
     },
   },
 }
@@ -75,6 +78,7 @@ export default {
 }
 .subtitle {
   font: normal 8px/13px IRANYekan;
+  text-align: right;
   letter-spacing: -0.06px;
   color: #818181;
 }

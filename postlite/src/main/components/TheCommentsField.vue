@@ -7,33 +7,35 @@
         :body="comment.body"
         :firstname="comment.firstname"
         :lastname="comment.lastname"
+        :date="comment.createdAt"
         :profile-image="comment.profileImage"
         :from-me="comment.fromMe"
       />
+      <span v-if="!comments.length" :class="$style.comment_status">نظری ثبت نشده است</span>
     </div>
     <div :class="$style.send_box">
       <textarea
+        ref="comment_textarea"
         :class="$style.comment_input"
         type="text"
+        rows="1"
+        @keydown.enter.exact="PrepareSendComment"
+        @keyup.enter.exact.prevent
+        @keydown.enter.exact.prevent
         v-model="currentComment"
-        placeholder="متن پاسخ خود را وارد کنید"
+        placeholder="نظر خود را ارسال کنید"
       />
       <div :class="$style.send_indicator">
         <Loading
-          v-if="isLoading"
+          v-if="isLoadingComments"
           :width="34"
           :height="34"
           :class="$style.loading"
           color="#FFFFFF"
-          :active.sync="isLoading"
+          :active.sync="isLoadingComments"
           :is-full-page="false"
         />
-        <button
-          v-else
-          :class="$style.send_btn"
-          @click="sendComment"
-          @keyup.enter.exact="sendComment"
-        >
+        <button v-else :class="$style.send_btn" @click="PrepareSendComment">
           <img src="send.svg" />
         </button>
       </div>
@@ -46,126 +48,81 @@
 import Comment from './CommentItem'
 import Loading from 'vue-loading-overlay'
 //utils
-import {
-  getAllComments,
-  postComment,
-} from '../helper/function/handleRequests.js'
-// W
-const { W } = window
+import * as autosize from 'autosize'
+//vuex
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: { Comment, Loading },
   props: {
-    userId: {
-      type: String,
-    },
-    wisId: {
-      type: String,
+    scrollToEnd: {
+      type: Function,
     },
   },
   data: () => ({
-    rawComments: [],
-    usersInfo: {},
     currentComment: '',
-    isLoading: false,
   }),
-  mounted() {
-    this.updateComments()
-      .then(() => {
-        this.isLoading = false
-      })
-      .catch(console.log)
-  },
   computed: {
-    comments() {
-      const res = this.rawComments.map(({ writerId, body, date, _id }) => ({
-        ...this.usersInfo[writerId],
-        date,
-        body,
-        fromMe: writerId === this.userId,
-        _id,
-      }))
-
-      return res
-
-      // return [
-      //   {
-      //     body:
-      //       'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      //     date: 'Wed Sep 25 2019 21:13:32 GMT+0330 (Iran Standard Time)',
-      //     fromMe: false,
-      //     firstname: 'جواد',
-      //     lastname: 'واحدی',
-      //     profileImage: '',
-      //   },
-      // ]
-    },
+    ...mapState(['userId', 'wisId', 'isLoadingComments']),
+    ...mapGetters(['comments']),
+  },
+  mounted() {
+    var commentInput = this.$el.querySelectorAll('textarea')
+    autosize(commentInput)
+    this.updateComments().catch(console.log)
   },
   methods: {
-    sendComment() {
+    ...mapActions(['sendComment', 'updateComments']),
+    PrepareSendComment() {
       const commentToSubmit = this.currentComment
-
-      this.isLoading = true
       this.currentComment = ''
-
-      postComment(this.wisId, this.userId, commentToSubmit)
-        .then(this.updateComments)
-        .then(() => {
-          this.isLoading = false
-        })
+      //setting height hardcoded because autosize didnt worked here.
+      this.$refs.comment_textarea.style += 'height: 38px;'
+      if (!commentToSubmit) return
+      this.sendComment(commentToSubmit)
+        .then(() => this.scrollToEnd())
         .catch(console.log)
-    },
-    updateComments() {
-      return new Promise(resolve =>
-        getAllComments(this.wisId).then(rawComments => {
-          const userIds = rawComments.map(({ writerId }) => writerId)
-
-          W.getUsersInfoById(userIds).then(usersInfo => {
-            this.rawComments = rawComments
-            this.usersInfo = usersInfo
-            resolve()
-          })
-        }),
-      )
     },
   },
 }
 </script>
 
 <style module>
-.container {
-  height: 55vh;
-}
 .comments {
-  height: calc(100% - 55px);
+  min-height: 10px;
   width: 100%;
-  overflow: scroll;
   box-sizing: border-box;
-  padding: 0 20px;
+  padding: 0 20px 55px 20px;
 }
 .send_box {
   display: flex;
   flex-direction: row-reverse;
   align-content: center;
   align-items: center;
-  height: 55px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
   box-sizing: border-box;
   background: #777777;
 }
 .comment_input {
   direction: rtl;
   box-sizing: border-box;
+  margin: 10px 0;
   margin-right: 10px;
   width: 100%;
-  height: 35px;
-  max-height: 75px;
-  min-height: 3۵px;
+  max-height: 70px;
+  min-height: 38px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 11px;
   padding: 10px 15px;
-  font: 12px IranYekan;
+  font: 13px IranYekan;
   border: none;
   resize: none;
+  overflow: hidden scroll;
+}
+.comment_input::-webkit-scrollbar {
+  width: 0 !important;
 }
 .send_indicator {
   height: 100%;
@@ -190,5 +147,14 @@ export default {
 }
 .loading {
   margin: 4px 0 0 0;
+}
+.comment_status {
+  width: 100%;
+  display: block;
+  margin: 6px 0;
+  text-align: center;
+  font: italic 10px/17px IRANYekan;
+  letter-spacing: -0.07px;
+  color: #818181;
 }
 </style>

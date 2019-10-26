@@ -1,13 +1,18 @@
 <template>
   <div :class="$style.root">
     <AppBar />
-    <div :class="$style.app_content">
-      <ImageField :class="$style.image_field" :image-url="post.image.url" />
-      <PostField :post-text="post.text" :post-title="post.title" />
+    <div :class="$style.app_content" id="c--app-content">
+      <ImageField v-if="post.image" :class="$style.image_field"/>
+      <ResponseBar
+        :class="post.image? $style.response_bar : $style.response_bar_nonimg"
+      />
+      <PostField />
+      <template v-if="post.file">
+        <hr />
+        <DownloadField />
+      </template>
       <hr />
-      <DownloadField :file-obj="post.file" />
-      <hr />
-      <CommentsField :wis-id="wisId" :user-id="userId" />
+      <CommentsField :scroll-to-end="scrollToEnd" />
     </div>
   </div>
 </template>
@@ -17,6 +22,7 @@
 // components
 import AppBar from '../components/TheAppBar'
 import ImageField from './components/TheImageField'
+import ResponseBar from './components/TheResponseBar'
 import PostField from './components/ThePostField'
 import DownloadField from './components/TheDownloadField'
 import CommentsField from './components/TheCommentsField'
@@ -24,25 +30,32 @@ import CommentsField from './components/TheCommentsField'
 import webliteHandler from './helper/function/weblite.api'
 // W
 const { W } = window
+//vuex
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
-
-  components: { AppBar, ImageField, PostField, DownloadField, CommentsField },
-
-  data() {
-    return {
-      post: { image: { url: '' } },
-      wisId: '5cd6de160583944a3a01c9de',
-      userId: '5c30dc0cdf7c064bfdf85f7d',
-    }
+  components: {
+    AppBar,
+    ImageField,
+    ResponseBar,
+    PostField,
+    DownloadField,
+    CommentsField,
   },
 
+  computed: mapState([
+    'post',
+  ]),
   created() {
-    W && webliteHandler(this)
+    W && webliteHandler()
   },
-
-  methods: {},
+  methods: {
+    scrollToEnd() {
+      var container = this.$el.querySelector('#c--app-content')
+      container.scrollTop = container.scrollHeight
+    },
+  },
 }
 </script>
 
@@ -57,9 +70,24 @@ export default {
 .app_content {
   height: calc(100% - 50px);
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.app_content::-webkit-scrollbar {
+  width: 0 !important;
 }
 .image_field {
   width: 100%;
+  min-height: 200px;
+}
+.response_bar {
+  position: relative;
+  margin: -30px 0 0 25px;
+  z-index: 100;
+  width: 140px;
+}
+.response_bar_nonimg {
+  padding: 0 10px;
+  margin-top: 10px;
 }
 hr {
   border-top: 1px solid #cccccc;

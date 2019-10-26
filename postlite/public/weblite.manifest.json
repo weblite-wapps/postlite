@@ -5,7 +5,7 @@
   "instantiable": true,
   "creator": true,
   "inline": true,
-  "shareDB": false,
+  "shareDB": true,
   "userInfo": true,
   "width": 352,
   "height": 452,
@@ -13,5 +13,5 @@
     "inline": "index.inline",
     "main": "index.main"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }

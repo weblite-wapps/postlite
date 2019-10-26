@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "pub": "yarn build;cd dist;weblite publish;cd .."
   },
   "dependencies": {
+    "autosize": "^4.0.2",
     "jalali-moment": "^3.3.3",
     "ramda": "^0.26.1",
     "superagent": "^5.1.0",

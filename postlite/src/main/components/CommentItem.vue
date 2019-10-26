@@ -12,13 +12,13 @@
         </div>
         <span class="writer" :style="{ 'text-align': fromMe ? 'left' : 'right'}">
           {{firstname}} {{lastname}}
-          <span class="date">سه شنبه ۲۶ شهریور - ۱۴:۳۰</span>
+          <span class="date">{{date | fixDate}}</span>
         </span>
       </div>
     </div>
     <div>
       <p
-        :class="['body']"
+        class="body"
         :style="fromMe? {'margin-left': '43px'} : {'margin-right': '43px'}"
       >{{body}}</p>
     </div>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+//utils
+import { convertToPersianFormat } from '../helper/function/date'
 export default {
   computed: {},
   props: {
@@ -45,12 +47,20 @@ export default {
     lastname: {
       type: String,
     },
+    date: {
+      type: String,
+    },
+  },
+  filters: {
+    fixDate(date) {
+      return convertToPersianFormat(new Date(date))
+    },
   },
 }
 </script>
 
 <style scoped>
-Î .container {
+.container {
   margin-bottom: 5px;
   display: block;
   width: 100%;
@@ -74,7 +84,7 @@ export default {
 .avatar_img {
   width: 100%;
   height: 100%;
-  object-fit: scale-down;
+  object-fit: cover;
 }
 .writer {
   display: flex;
@@ -87,11 +97,11 @@ export default {
   border-radius: 11px;
 }
 .date {
-  font-size: 10px;
-  font-weight: bold;
   line-height: 17px;
-  text-align: right;
+  text-align: inherit;
+  font: Bold 10px/17px IRANYekan;
   letter-spacing: -0.07px;
+  color: #818181;
 }
 .body {
   background: #f0f0f0;
@@ -102,6 +112,8 @@ export default {
   line-height: 21px;
   text-align: right;
   letter-spacing: -0.08px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 .info_container {
   width: 100%;

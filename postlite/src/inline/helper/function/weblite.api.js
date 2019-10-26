@@ -1,18 +1,26 @@
 const { W } = window;
 
-export default vueRoot =>
+export default vueRoot => {
+  vueRoot.wisId = W.wisId
+
   W.setHooks({
     wappWillStart(start) {
-      W.loadData().then(
-        ({ user: { name, id }, creator, customize: { post } }) => {
-          vueRoot.name = name;
-          vueRoot.userId = id;
-          vueRoot.creator = creator;
-          vueRoot.wisId = W.wisId;
-          vueRoot.post = post;
+      W.loadData().then(({ user: { name, id }, creator, customize: { post } }) => {
+        vueRoot.name = name;
+        vueRoot.userId = id;
+        vueRoot.creator = creator;
+        vueRoot.post = post;
 
-          start();
-        }
-      );
+        start();
+      }
+      )
+
+      W.share.getFromServer([]).then(() => {
+        vueRoot.isLoadingLikes = false
+      })
+      W.share.subscribe((likes = []) => {
+        vueRoot.likesCount = likes.length
+      })
     }
   });
+}

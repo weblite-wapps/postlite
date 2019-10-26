@@ -1,14 +1,28 @@
-.<template>
-  <img :src="imageUrl" alt="post-image">
+<template>
+  <div :class="$style.container">
+    <img :class="$style.image" :src="imageUrl" />
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-    props:{
-        imageUrl:{
-            type: String,
-            default: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg",
-        }
-    }
+  //for local test
+  computed: mapGetters(['imageUrl']),
 }
 </script>
+
+<style module>
+.container {
+  overflow: hidden;
+  background: gray;
+  display: flex;
+  align-items: center;
+}
+.image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+</style>

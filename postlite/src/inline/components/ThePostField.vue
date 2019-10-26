@@ -14,8 +14,6 @@ export default {
     },
     summary: {
       type: String,
-      default:
-        'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه مجله در ستون و سطر آنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد',
     },
   },
 }
@@ -24,16 +22,23 @@ export default {
 <style module>
 .post_field {
   direction: rtl;
+  margin-top: 10px;
 }
 .title {
-  font-size: 13px;
+  font: BOLd 13.5px/21px IRANYekan;
   letter-spacing: -0.08px;
 }
 .summary {
-  margin: 0;
-  font-size: 9px;
+  font: Normal 9.5px/13px IRANYekan;
+  margin: 6px 0 0 2px;
   letter-spacing: -0.06px;
   text-align: justify;
   overflow: hidden;
+  max-height: 91px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.summary::-webkit-scrollbar {
+  width: 0 !important;
 }
 </style>

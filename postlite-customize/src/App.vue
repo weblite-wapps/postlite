@@ -48,7 +48,7 @@ export default {
   methods: {
     sendPost() {
       W.sendMessageToCurrentChat('wapp', {
-        wappId: '5d95b320de56f067653806bd',
+        wappId: '5d888cc63871b67f14674961',
         customize: {
           post: { ...this.post, image: this.image, file: this.file },
         },

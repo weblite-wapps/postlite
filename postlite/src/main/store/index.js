@@ -7,7 +7,7 @@ import Vuex from "vuex"
 //plugins
 import createLogger from 'vuex/dist/logger'
 //types
-import { setIncommingData } from '../helper/constants/mutation-types'
+import { setIncommingData } from '../helper/constants/mutationTypes'
 Vue.use(Vuex)
 //shareDB
 import { addLike, removeLike } from '../helper/function/changeLikes'

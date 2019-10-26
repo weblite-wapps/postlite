@@ -6,11 +6,6 @@ module.exports = {
       template: "public/index.html",
       filename: "index.main.html"
     },
-    customize: {
-      entry: "src/customize/main.js",
-      template: "public/index.html",
-      filename: "index.customize.html"
-    },
     inline: {
       entry: "src/inline/main.js",
       template: "public/index.html",

@@ -2,7 +2,7 @@ const { W } = window;
 //vuex
 import store from '../../store'
 //types
-import { setIncommingData } from '../constants/mutation-types'
+import { setIncommingData } from '../constants/mutationTypes'
 export default () => {
   store.commit(setIncommingData, { wisId: W.wisId })
   var userId = ''

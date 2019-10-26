@@ -10,12 +10,6 @@ import {mapGetters} from 'vuex'
 export default {
   //for local test
   computed: mapGetters(['imageUrl']),
-  data() {
-    return {
-      fakeImg:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Anatomy_of_a_Sunset-2.jpg/1920px-Anatomy_of_a_Sunset-2.jpg',
-    }
-  },
 }
 </script>
 

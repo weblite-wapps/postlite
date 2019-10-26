@@ -3,7 +3,9 @@
     <button :class="$style.more_button" @click="seeMore">مشاهده ادامه</button>
     <div :class="$style.gray_bar">
       <div :class="$style.status_label">
-        <img src="comments.svg" />
+        <div :class="$style.icon_container">
+          <img src="comments.svg" />
+        </div>
         <span v-if="!isLoadingComments" :class="$style.count_span">{{commentsCount | toPersian}}</span>
         <Loading
           v-else
@@ -16,7 +18,9 @@
         />
       </div>
       <div :class="$style.status_label">
-        <img src="like.svg" />
+        <div :class="$style.icon_container">
+          <img src="like.svg" :style="{'margin-top': '1px'}"/>
+        </div>
         <span v-if="!isLoadingLikes" :class="$style.count_span">{{likesCount | toPersian}}</span>
         <Loading
           v-else
@@ -91,15 +95,14 @@ export default {
   align-items: center;
 }
 .more_button {
+  font: Bold 10px/17px IRANYekan;
   box-sizing: border-box;
   width: 75px;
   border: none;
-  font-weight: 500;
   height: 25px;
   background: #7dd9de 0% 0% no-repeat padding-box;
   border-radius: 12px;
   color: white;
-  font-size: 10px;
   letter-spacing: -0.07px;
 }
 .gray_bar {
@@ -109,6 +112,9 @@ export default {
 }
 .gray_bar div:not(:first-child) {
   margin-right: 5px;
+}
+.icon_container{
+  display: flex;
 }
 .attach_btn {
   display: flex;
@@ -127,14 +133,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 35px;
   padding: 0 5px;
   height: 20px;
   background: #cccccc 0% 0% no-repeat padding-box;
   border-radius: 10px;
 }
 .count_span {
-  margin-right: 5px;
+  margin: 0 5px 0 3px;
   text-align: center;
   font-size: 12px;
   letter-spacing: -0.08px;

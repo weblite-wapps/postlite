@@ -11,6 +11,7 @@
         :profile-image="comment.profileImage"
         :from-me="comment.fromMe"
       />
+      <span v-if="!comments.length" :class="$style.comment_status">نظری ثبت نشده است</span>
     </div>
     <div :class="$style.send_box">
       <textarea
@@ -68,8 +69,7 @@ export default {
   mounted() {
     var commentInput = this.$el.querySelectorAll('textarea')
     autosize(commentInput)
-    this.updateComments()
-    .catch(console.log)
+    this.updateComments().catch(console.log)
   },
   methods: {
     ...mapActions(['sendComment', 'updateComments']),
@@ -80,8 +80,8 @@ export default {
       this.$refs.comment_textarea.style += 'height: 38px;'
       if (!commentToSubmit) return
       this.sendComment(commentToSubmit)
-      .then(() => this.scrollToEnd())
-      .catch(console.log)
+        .then(() => this.scrollToEnd())
+        .catch(console.log)
     },
   },
 }
@@ -147,5 +147,14 @@ export default {
 }
 .loading {
   margin: 4px 0 0 0;
+}
+.comment_status {
+  width: 100%;
+  display: block;
+  margin: 6px 0;
+  text-align: center;
+  font: italic 10px/17px IRANYekan;
+  letter-spacing: -0.07px;
+  color: #818181;
 }
 </style>

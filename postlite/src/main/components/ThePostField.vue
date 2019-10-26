@@ -18,10 +18,11 @@ export default {
   padding: 0 22px;
 }
 .title {
-  font: Normal 16px/28px IranYekan;
+  font: Bold 16px/28px IranYekan;
   letter-spacing: -0.11px;
 }
 .text {
+  margin-top: 8px;
   font: Normal 12px/21px IranYEKAN;
   letter-spacing: -0.08px;
   text-align: justify;

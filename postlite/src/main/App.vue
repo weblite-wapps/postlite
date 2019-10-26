@@ -77,9 +77,7 @@ export default {
 }
 .image_field {
   width: 100%;
-  height: 50vh;
-  display: block;
-  z-index: 10;
+  min-height: 200px;
 }
 .response_bar {
   position: relative;

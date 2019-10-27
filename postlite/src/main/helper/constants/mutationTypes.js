@@ -1,0 +1,1 @@
+export const setIncomingData = 'SET_INCOMING_DATA'

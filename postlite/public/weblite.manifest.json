@@ -1,0 +1,17 @@
+{
+  "name": "Postlite",
+  "id": "5d888cc63871b67f14674961",
+  "searchable": false,
+  "instantiable": true,
+  "creator": true,
+  "inline": true,
+  "shareDB": true,
+  "userInfo": true,
+  "width": 352,
+  "height": 452,
+  "servIndexes": {
+    "inline": "index.inline",
+    "main": "index.main"
+  },
+  "version": "0.1.1"
+}

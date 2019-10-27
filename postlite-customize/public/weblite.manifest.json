@@ -1,0 +1,12 @@
+{
+  "name": "پست",
+  "id": "5d8e680d01dbd77775ee5024",
+  "searchable": true,
+  "instantiable": false,
+  "userInfo": true,
+  "runFromWappsPanel": true,
+  "servIndexes": {
+    "main": "index"
+  },
+  "version": "0.1.31"
+}

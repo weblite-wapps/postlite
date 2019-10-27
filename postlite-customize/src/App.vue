@@ -1,11 +1,15 @@
 <template>
   <div :class="$style.root">
     <AppBar />
+
     <div :class="$style.content">
       <uploadImage :class="$style.image_field" :setImage="setImage" />
+
       <post :class="$style.post_field" :setPost="setPost" />
+
       <uploadFile :class="$style.file_field" :setFile="setFile" />
     </div>
+
     <button :class="$style.send_btn" @click="sendPost">ارسال</button>
   </div>
 </template>
@@ -47,28 +51,34 @@ export default {
 
   methods: {
     sendPost() {
-      W.sendMessageToCurrentChat('wapp', {
+      W && W.sendMessageToCurrentChat('wapp', {
         wappId: '5d888cc63871b67f14674961',
         customize: {
           post: { ...this.post, image: this.image, file: this.file },
         },
       })
-        .then(() => W.closeX(true))
+        .then(() => W && W.closeX(true))
         .catch(err => console.log('error happened while sending post:', err))
+
+      W && W.analytics('SEND_POST')
     },
     setFile({ target: { files } }) {
-      W.upload(superagent, files[0], console.log).then(
+      W && W.upload(superagent, files[0], console.log).then(
         ({ url, name, size }) => {
           this.file = { url, name, size }
         },
       )
+
+      W && W.analytics('UPLOAD_FILE')
     },
     setImage({ target: { files } }) {
-      W.upload(superagent, files[0], console.log).then(
+      W && W.upload(superagent, files[0], console.log).then(
         ({ url, name, size }) => {
           this.image = { url, name, size }
         },
       )
+
+      W && W.analytics('UPLOAD_IMAGE')
     },
     setPost(postData) {
       this.post = { ...post, ...postData }

@@ -63,7 +63,7 @@ export default {
     currentComment: '',
   }),
   computed: {
-    ...mapState(['userId', 'wisId', 'isLoadingComments']),
+    ...mapState(['userId', 'wisId', 'adminId', 'isLoadingComments']),
     ...mapGetters(['comments']),
   },
   mounted() {
@@ -82,6 +82,15 @@ export default {
       this.sendComment(commentToSubmit)
         .then(() => this.scrollToEnd())
         .catch(console.log)
+
+      W && W.sendNotificationToUsers(
+          'کامنت جدید',
+          'وپ پست',
+          ['push', 'weblite'],
+          {},
+          [this.adminId],
+        )
+      W && W.analytics('NEW_COMMENT')
     },
   },
 }
@@ -116,7 +125,7 @@ export default {
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 11px;
   padding: 10px 15px;
-  font: 13px IranYekan;
+  font: 16px IranYekan;
   border: none;
   resize: none;
   overflow: hidden scroll;

@@ -75,6 +75,7 @@ export default {
   border: none;
   width: 100%;
   padding: 10px;
+  font-size: 16px;
 }
 .non_responsive {
   height: 55px;

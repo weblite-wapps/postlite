@@ -1,1 +1,1 @@
-export const setIncommingData = 'SET_INCOMMING_DATA'
+export const setIncomingData = 'SET_INCOMING_DATA'

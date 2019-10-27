@@ -50,8 +50,8 @@ export default {
 
   methods: {
     handleOpenInX() {
-      W.analytics("SEE_MORE_CLICK")
-      W.changeModeTo('main')
+      W && W.analytics("SEE_MORE_CLICK")
+      W && W.changeModeTo('main')
     },
   },
 }

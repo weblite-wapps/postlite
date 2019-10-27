@@ -7,7 +7,7 @@ import Vuex from "vuex"
 //plugins
 import createLogger from 'vuex/dist/logger'
 //types
-import { setIncommingData } from '../helper/constants/mutationTypes'
+import { setIncomingData } from '../helper/constants/mutationTypes'
 Vue.use(Vuex)
 //shareDB
 import { addLike, removeLike } from '../helper/function/changeLikes'
@@ -19,6 +19,7 @@ export default new Vuex.Store({
         post: { image: { url: '' } },
         wisId: '',
         userId: '',
+        adminId: '',
         hasLiked: '',
         usersInfo: {},
         likesCount: 0,
@@ -47,7 +48,7 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        [setIncommingData](state, payload) {
+        [setIncomingData](state, payload) {
             R.forEachObjIndexed(
                 (val, key) => state[key] = val,
                 payload)
@@ -59,11 +60,11 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) =>
                 getAllComments(state.wisId)
                     .then(rawComments => {
-                        commit(setIncommingData, { commentsCount: rawComments.length, isLoadingCommentsCount: false })
+                        commit(setIncomingData, { commentsCount: rawComments.length, isLoadingCommentsCount: false })
                         const userIds = rawComments.map(({ writerId }) => writerId)
                         W.getUsersInfoById(userIds)
                             .then(usersInfo => {
-                                commit(setIncommingData, { isLoadingComments: false, rawComments, usersInfo })
+                                commit(setIncomingData, { isLoadingComments: false, rawComments, usersInfo })
                                 resolve()
                             })
                             .catch(reject)
@@ -73,7 +74,7 @@ export default new Vuex.Store({
         },
         sendComment({ state, commit, dispatch }, comment) {
             return new Promise((resolve, reject) => {
-                commit(setIncommingData, { isLoadingComments: true })
+                commit(setIncomingData, { isLoadingComments: true })
                 postComment(state.wisId, state.userId, comment)
                     .then(() => dispatch('updateComments'))
                     .then(resolve)

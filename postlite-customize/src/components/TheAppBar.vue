@@ -23,7 +23,7 @@ export default {}
   background-color: black;
   height: 50px;
   text-align: center;
-  width: 100vw;
+  width: 100%;
 }
 .logo_container {
   margin: -6px 0 0 15px;

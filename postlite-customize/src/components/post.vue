@@ -2,24 +2,36 @@
   <div :class="$style.root">
     <div :class="$style.non_responsive">
       <label for="title" :class="$style.text_label">عنوان پست</label>
-      <input id="title" :class="[$style.text_area, $style.title]" type="text" v-model="title" />
+      <input
+        id="title"
+        dir="auto"
+        :class="[$style.text_container, $style.title]"
+        type="text"
+        v-model="title"
+      />
     </div>
 
-    <div :class="$style.responsive">
-      <div :class="$style.summary_field">
-        <label for="summary" :class="$style.text_label">خلاصه پست</label>
-        <textarea
-          id="summary"
-          :class="[$style.text_area, $style.summary]"
-          type="text"
-          v-model="summary"
-          placeholder="متنی که در حالت چت به عنوان خلاصه به کاربر نمایش داده می شود"
-        />
-      </div>
-      <div :class="$style.post_field">
-        <label for="text" :class="$style.text_label">متن پست</label>
-        <textarea id="text" :class="[$style.text_area, $style.text]" type="text" v-model="text" />
-      </div>
+    <div :class="$style.upper_gap">
+      <label for="summary" :class="$style.text_label">خلاصه پست</label>
+      <textarea
+        dir="auto"
+        id="summary"
+        :class="[$style.text_area, $style.text_container, $style.summary]"
+        type="text"
+        v-model="summary"
+        placeholder="متنی که در حالت چت به عنوان خلاصه به کاربر نمایش داده می شود"
+      />
+    </div>
+    <div :class="$style.upper_gap">
+      <label for="text" :class="$style.text_label">متن پست</label>
+      <textarea
+        dir="auto"
+        placeholder="متن پست"
+        id="text"
+        :class="[$style.text_area, $style.text_container , $style.text]"
+        type="text"
+        v-model="text"
+      />
     </div>
   </div>
 </template>
@@ -67,49 +79,53 @@ export default {
 <style module>
 .root {
   direction: rtl;
+  margin: 20px;
+  margin-top: 0;
 }
-.text_area {
+
+.text_container {
   font-family: IranYekan;
   box-sizing: border-box;
   background-color: #f0f0f0;
-  border: none;
   width: 100%;
-  padding: 10px;
+  padding: 6px 9px;
+  border: none;
   font-size: 16px;
 }
+.text_container::placeholder {
+  text-align: right;
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: -0.08px;
+  color: #ccc;
+}
+
+.upper_gap {
+  margin-top: 3px;
+}
+
+.text_area {
+  padding: 15px;
+}
+
 .non_responsive {
   height: 55px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
-.responsive {
-  height: calc(100% - 55px);
-  box-sizing: border-box;
-}
-.summary_field {
-  height: 30%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-.post_field {
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+
 .title {
   box-sizing: border-box;
-  height: 100%;
+  height: 40px;
 }
 .summary {
-  height: 100%;
+  height: 70px;
   box-sizing: border-box;
   resize: none;
 }
 .text {
-  height: 100%;
+  height: 190px;
   box-sizing: border-box;
   resize: none;
 }
@@ -122,24 +138,7 @@ export default {
   letter-spacing: -0.07px;
   color: #808285;
   opacity: 1;
-  margin-top: 3px;
+  margin-bottom: 5px;
 }
 
-@media screen and (max-height: 450px), (min-height: 360) {
-  .summary_field {
-    height: 40%;
-  }
-  .post_field {
-    height: 60%;
-  }
-}
-
-@media screen and (max-height: 360px) {
-  .summary_field {
-    height: 50%;
-  }
-  .post_field {
-    height: 50%;
-  }
-}
 </style>

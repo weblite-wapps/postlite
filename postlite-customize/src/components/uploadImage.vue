@@ -1,6 +1,6 @@
 <template>
     <label for="input-image" :class="$style.label">
-      <input id="input-image" :class="$style.input" name="image" type="file" @change="setImage" />
+      <input id="input-image" :class="$style.input" name="image" type="file" accept="image/*" @change="setImage" />
       <div :class="$style.button_container">
         <img src="image-frame.svg" />
         <div :class="$style.title_container">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </label>
-    
+
 </template>
 
 
@@ -41,14 +41,17 @@ export default {
 <style module>
 .label {
   box-sizing: border-box;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   background-color: #c9e8ff;
-  width: 100%;
+  /* width: 100%; */
+  margin: 20px;
+  margin-bottom: 8px;
   cursor: pointer;
 }
 .button_container {
-  padding-top: 10px;
   display: inline-flex;
   flex-direction: row-reverse;
 }
@@ -75,5 +78,6 @@ export default {
 }
 .input {
   display: none;
+  font-size: 16px;
 }
 </style>

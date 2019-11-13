@@ -7,9 +7,9 @@
 
       <post :class="$style.post_field" :setPost="setPost" />
 
-      <uploadFile :class="$style.file_field" :setFile="setFile" />
-    </div>
+      <uploadFile :class="$style.file_field" :setFile="setFile" :name="file&& file.name" :uploadingProgress="uploadingProgress"/>
 
+    </div>
     <button :class="$style.send_btn" @click="sendPost">ارسال</button>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
   data: () => ({
     image: null,
     file: null,
+    uploadingProgress: null,
     post: {
       title: '',
       summary: '',
@@ -63,7 +64,9 @@ export default {
       W && W.analytics('SEND_POST')
     },
     setFile({ target: { files } }) {
-      W && W.upload(superagent, files[0], console.log).then(
+      W && W.upload(superagent, files[0], ({percent, total}) => {
+        this.uploadingProgress = `${percent} of ${total}`
+      }).then(
         ({ url, name, size }) => {
           this.file = { url, name, size }
         },
@@ -94,21 +97,25 @@ export default {
 
 <style module>
 .root {
-  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 .content {
   box-sizing: border-box;
   background-color: white;
-  height: calc(100% - 90px);
-  border: solid #f0f0f0 1px;
-  padding: 20px 15px;
+  border: 1px solid #f0f0f0;
+  height: calc(100% - 50px);
+  overflow: auto;
+  /* padding: 20px 15px; */
 }
 .image_field {
-  height: 50px;
+  height: 64px;
 }
 .file_field {
-  height: 50px;
+  height: 64px;
 }
 .send_btn {
   height: 40px;
@@ -116,17 +123,17 @@ export default {
   font: Bold 16px/28px IranYekan;
   color: white;
   letter-spacing: -0.26px;
-  box-sizing: border-box;
   border: none;
   background: #818181;
   cursor: pointer;
+  transition: all .3s ease;
 }
+.send_btn:hover {
+  background-color: #588ab0;
+}
+
 .post_field {
   box-sizing: border-box;
-  height: calc(100% - 100px);
 }
-input,
-textarea:focus {
-  border: dotted 1px gray;
-}
+
 </style>

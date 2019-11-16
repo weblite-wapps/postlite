@@ -40,6 +40,9 @@ export default new Vuex.Store({
                     _id,
                 }))
         },
+        aparatUrl(state) {
+            return `https://www.aparat.com/video/video/embed/videohash/${state.post.aparat}/vt/frame`
+        },
         imageUrl(state) {
             return state.post.image.url
         },

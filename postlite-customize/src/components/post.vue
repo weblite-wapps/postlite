@@ -1,6 +1,17 @@
 <template>
   <div :class="$style.root">
     <div :class="$style.non_responsive">
+      <label for="aparat" :class="$style.text_label">لینک آپارات</label>
+      <input
+        id="aparat"
+        dir="ltr"
+        :class="[$style.text_container, $style.title]"
+        type="text"
+        v-model="aparat"
+      />
+    </div>
+
+    <div :class="$style.non_responsive">
       <label for="title" :class="$style.text_label">عنوان پست</label>
       <input
         id="title"
@@ -48,18 +59,20 @@ export default {
   components: {},
 
   data: () => ({
+    aparat: '',
     title: '',
     summary: '',
     text: '',
   }),
   computed: {
     postData() {
-      return this.title + this.summary + this.text
+      return this.aparat + this.title + this.summary + this.text
     },
   },
   watch: {
     postData() {
       this.setPost({
+        aparat: this.aparat,
         title: this.title,
         summary: this.summary,
         text: this.text,

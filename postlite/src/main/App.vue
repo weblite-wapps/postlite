@@ -2,6 +2,7 @@
   <div :class="$style.root">
     <AppBar />
     <div :class="$style.app_content" id="c--app-content">
+      <Aparat v-if="post.aparat" :class="$style.image_field" />
       <ImageField v-if="post.image" :class="$style.image_field"/>
       <ResponseBar
         :class="post.image? $style.response_bar : $style.response_bar_nonimg"
@@ -21,6 +22,7 @@
 <script>
 // components
 import AppBar from '../components/TheAppBar'
+import Aparat from './components/TheAparat'
 import ImageField from './components/TheImageField'
 import ResponseBar from './components/TheResponseBar'
 import PostField from './components/ThePostField'
@@ -37,6 +39,7 @@ export default {
   name: 'App',
   components: {
     AppBar,
+    Aparat,
     ImageField,
     ResponseBar,
     PostField,

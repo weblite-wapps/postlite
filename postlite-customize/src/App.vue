@@ -29,6 +29,11 @@ import webliteHandler from './helper/function/weblite.api'
 // W
 const { W } = window
 
+const getAparatHash = url => {
+  if (!url) return null
+  return url.split('/v/').slice(-1)[0]
+}
+
 export default {
   name: 'App',
 
@@ -44,6 +49,7 @@ export default {
     file: null,
     uploadingProgress: null,
     post: {
+      aparat: '',
       title: '',
       summary: '',
       text: '',
@@ -55,7 +61,7 @@ export default {
       W && W.sendMessageToCurrentChat('wapp', {
         wappId: '5d888cc63871b67f14674961',
         customize: {
-          post: { ...this.post, image: this.image, file: this.file },
+          post: { ...this.post, aparat: getAparatHash(this.post.aparat), image: this.image, file: this.file },
         },
       })
         .then(() => W && W.closeX(true))
